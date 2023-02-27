@@ -21,15 +21,22 @@ int main()
     Func_ServoStopMotor ServoStopMotor = LoadServoStopMotor(hModule);
     Func_ServoSetGain ServoSetGain = LoadServoSetGain(hModule);
 
-    int numberOfModules = NmcInit("COM1:", 19200);
+    int numberOfModules = NmcInit("COM3:", 19200);
     printf("Number of Modules detected: %d\n", numberOfModules);
     if (numberOfModules == 0)
     {
+        // Connect to COM1 for linux
+         int numberOfModules = NmcInit("COM1:", 19200);
+        printf("Number of Modules detected: %d\n", numberOfModules);
+        if (numberOfModules == 0) 
+        {
         printf("failed to initialize. Shutdown.");
         NmcShutdown();
         FreeLibrary(hModule);
         printf("Done.\n");
+        exit(0);
         return 0;
+        }
     }
 
     if (NmcGetModType(2) == SERVOMODTYPE)
@@ -75,8 +82,8 @@ int main()
     client.start_consuming();
 
     bool running = true;
-    std::int64_t errVer = 0;
-    std::int64_t errHor = 0;
+    int errVer = 0;
+    int errHor = 0;
     while (running)
     {
         // Construct a message pointer to hold an incoming message.
@@ -92,11 +99,13 @@ int main()
             std::string messageString = messagePointer->get_payload_str();
             if (topicString == "errver")
             {
-                errVer = stoi(messageString);
+                printf("%s", messageString);
+                errVer = std::stoi(messageString);
             }
             if (topicString == "errhor")
             {
-                errHor = stoi(messageString);
+                printf("%s", messageString);
+                errHor = std::stoi(messageString);
             }
             // Print payload string to console (debugging).
 
@@ -165,8 +174,11 @@ int main()
             );
         }
 
-        std::cout << "errver:" + errVer << std::endl;
-        std::cout << "errHor:" + errHor << std::endl;
+        printf("errver:%d\n", errVer);
+        printf("errHor:%d\n", errHor);
+
+        // std::cout << "errver:" + errVer << std::endl;
+        // std::cout << "errHor:" + errHor << std::endl;
     }
 
     std::printf("done");
