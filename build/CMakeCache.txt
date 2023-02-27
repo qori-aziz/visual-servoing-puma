@@ -307,7 +307,7 @@ PAHO_MQTT_C_INCLUDE_DIRS:PATH=C:/vcpkg/installed/x64-windows/include
 PAHO_MQTT_C_LIBRARIES:FILEPATH=C:/vcpkg/installed/x64-windows/debug/lib/paho-mqtt3a.lib
 
 //The directory containing a CMake configuration file for PahoMqttCpp.
-PahoMqttCpp_DIR:PATH=C:/vcpkg/installed/x64-windows/share/PahoMqttCpp
+PahoMqttCpp_DIR:PATH=C:/mqtt/paho-cpp/lib/cmake/PahoMqttCpp
 
 //Name of the computer/site where compile is being run
 SITE:STRING=Qori-PC
@@ -368,7 +368,7 @@ Z_VCPKG_PWSH_PATH:FILEPATH=Z_VCPKG_PWSH_PATH-NOTFOUND
 _VCPKG_INSTALLED_DIR:PATH=C:/vcpkg/installed
 
 //The directory containing a CMake configuration file for eclipse-paho-mqtt-c.
-eclipse-paho-mqtt-c_DIR:PATH=C:/vcpkg/installed/x64-windows/share/eclipse-paho-mqtt-c
+eclipse-paho-mqtt-c_DIR:PATH=C:/mqtt/paho-c/lib/cmake/eclipse-paho-mqtt-c
 
 //The directory containing a CMake configuration file for eclipse-paho-mqtt.
 eclipse-paho-mqtt_DIR:PATH=eclipse-paho-mqtt_DIR-NOTFOUND

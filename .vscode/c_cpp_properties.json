@@ -8,7 +8,7 @@
                 "C:\\Program Files (x86)\\Eclipse Paho C\\include"
             ],
             "defines": [
-                "_DEBUG",
+                "RELEASE",
                 "UNICODE",
                 "_UNICODE"
             ],

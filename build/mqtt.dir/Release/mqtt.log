@@ -1,0 +1,54 @@
+﻿  main.cpp
+paho-mqttpp3-static.lib(create_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(create_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(async_client.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(async_client.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(client.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(client.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(string_collection.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(string_collection.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(token.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(token.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(message.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(message.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(iclient_persistence.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(iclient_persistence.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(connect_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(connect_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(disconnect_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(disconnect_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(response_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(response_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(will_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(will_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+paho-mqttpp3-static.lib(ssl_options.obj) : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in main.obj
+paho-mqttpp3-static.lib(ssl_options.obj) : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MT_StaticRelease' in main.obj
+msvcprtd.lib(MSVCP140D.dll) : error LNK2005: "public: __cdecl std::_Lockit::_Lockit(int)" (??0_Lockit@std@@QEAA@H@Z) already defined in libcpmt.lib(xlock.obj)
+msvcprtd.lib(MSVCP140D.dll) : error LNK2005: "public: __cdecl std::_Lockit::~_Lockit(void)" (??1_Lockit@std@@QEAA@XZ) already defined in libcpmt.lib(xlock.obj)
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(will_options.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(ssl_options.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(message.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(iclient_persistence.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(connect_options.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(response_options.obj)'
+LINK : warning LNK4217: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(async_client.obj)' in function '"class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl std::operator+<char,struct std::char_traits<char>,class std::allocator<char> >(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &&,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &&)" (??$?HDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@$$QEAV10@0@Z)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(client.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(string_collection.obj)'
+LINK : warning LNK4286: symbol '_invalid_parameter' defined in 'libucrt.lib(invalid_parameter.obj)' is imported by 'paho-mqttpp3-static.lib(token.obj)'
+LINK : warning LNK4217: symbol 'abort' defined in 'libucrt.lib(abort.obj)' is imported by 'paho-mqttpp3-static.lib(client.obj)' in function '"void __cdecl std::call_once<class <lambda_0e64988457575224279dcb6d61e61bdd> >(struct std::once_flag &,class <lambda_0e64988457575224279dcb6d61e61bdd> &&)" (??$call_once@V<lambda_0e64988457575224279dcb6d61e61bdd>@@$$V@std@@YAXAEAUonce_flag@0@$$QEAV<lambda_0e64988457575224279dcb6d61e61bdd>@@@Z)'
+LINK : warning LNK4217: symbol 'terminate' defined in 'libucrt.lib(terminate.obj)' is imported by 'paho-mqttpp3-static.lib(client.obj)' in function '"public: __cdecl std::_Fake_no_copy_callable_adapter<void (__cdecl mqtt::callback::*)(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &),class mqtt::callback * &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &>::_Fake_no_copy_callable_adapter<void (__cdecl mqtt::callback::*)(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &),class mqtt::callback * &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &>(class std::_Fake_no_copy_callable_adapter<void (__cdecl mqtt::callback::*)(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &),class mqtt::callback * &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &> const &)" (??0?$_Fake_no_copy_callable_adapter@P8callback@mqtt@@EAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@ZAEAPEAV12@AEBV34@@std@@QEAA@AEBV01@@Z)'
+paho-mqttpp3-static.lib(will_options.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(ssl_options.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(message.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(iclient_persistence.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(connect_options.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(response_options.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(async_client.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(client.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(string_collection.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(token.obj) : error LNK2001: unresolved external symbol __imp__CrtDbgReport
+paho-mqttpp3-static.lib(async_client.obj) : error LNK2019: unresolved external symbol __imp_strncpy referenced in function "private: static int __cdecl mqtt::async_client::on_update_connection(void *,struct MQTTAsync_connectData *)" (?on_update_connection@async_client@mqtt@@CAHPEAXPEAUMQTTAsync_connectData@@@Z)
+paho-mqttpp3-static.lib(iclient_persistence.obj) : error LNK2001: unresolved external symbol __imp_strncpy
+paho-mqttpp3-static.lib(client.obj) : error LNK2019: unresolved external symbol __imp__CrtDbgReportW referenced in function "protected: __cdecl Concurrency::details::_RefCounter::_RefCounter(long)" (??0_RefCounter@details@Concurrency@@IEAA@J@Z)
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe : fatal error LNK1120: 3 unresolved externals
