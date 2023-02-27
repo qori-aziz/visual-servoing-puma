@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\CMakeFiles\08d3193f1cbd279bf3dee042a772354e\Nightly.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\CMakeFiles\Nightly" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{430958F5-34D5-3FDD-B0F0-AFEC3CEA3F9D}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,25 +1,28 @@
-// Start by `#include`-ing the Mosquitto MQTT Library and other standard libraries.
-// g++ SimpleMqttConsumer.cpp -lpaho-mqttpp3 -lpaho-mqtt3as -o simpleConsumer
-// g++ SimpleMqttConsumer.cpp -I'C:\Program Files (x86)\paho-mqtt-cpp\include' -I'C:\Program Files (x86)\Eclipse Paho C\include' -o simpleConsumer
-#include <mqtt/client.h>  // Mosquitto client.
+#include <iostream>
+
+#include <mqtt/client.h>  // Mosquitto client
 #include <ostream>  // std::cout.
 
 // With the library header files included, continue by defining a main function.
 int main()
 {
+    std::printf("tes1");
     // In order to connect the mqtt client to a broker, 
     // Define an Ip address pointing to a broker. In this case, the localhost on port 1883.
     std::string ip = "localhost:1883";
     // Then, define an ID to be used by the client when communicating with the broker.
     std::string id = "consumer";
-
+    std::printf("tes2");
     // Construct a client using the Ip and Id, specifying usage of MQTT V5.
     mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
+    std::printf("tes3");
     // Use the connect method of the client to establish a connection to the broker.
     client.connect();
+    std::printf("tes4");
     // In order to receive messages from the broker, specify a topic to subscribe to.
     client.subscribe("errver");
     client.subscribe("errhor");
+    std::printf("tes5");
     // Begin the client's message processing loop, filling a queue with messages.
     client.start_consuming();
 
@@ -54,6 +57,8 @@ int main()
         std::cout << "errver:" + errVer << std::endl;
         std::cout << "errHor:" + errHor << std::endl;
     }
+
+    std::printf("done");
 
     return 0;
 }

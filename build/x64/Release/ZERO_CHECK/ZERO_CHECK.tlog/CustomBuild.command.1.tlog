@@ -1,0 +1,10 @@
+^C:\USERS\MUHAM\ONEDRIVE\TESIS\PROGRAM\VISUAL-SERVOING-PUMA\BUILD\CMAKEFILES\08D3193F1CBD279BF3DEE042A772354E\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma -BC:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/mqtt.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

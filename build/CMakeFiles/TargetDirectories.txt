@@ -1,0 +1,4 @@
+C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/CMakeFiles/mqtt.dir
+C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/CMakeFiles/PACKAGE.dir
+C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/CMakeFiles/ZERO_CHECK.dir
