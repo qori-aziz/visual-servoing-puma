@@ -117,7 +117,7 @@ int main()
             BOOL success = ServoLoadTraj(1, // vertical
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                                          5000, // pos = 2000
-                                         100000,    // vel = 100,000
+                                         -100000,    // vel = 100,000
                                          1000, // acc = 100
                                          0     // pwm = 0
             );
@@ -127,7 +127,7 @@ int main()
             BOOL success = ServoLoadTraj(1, // vertical
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                                          5000, // pos = 2000
-                                         -100000,     // vel = -100,000
+                                         100000,     // vel = -100,000
                                          1000,  // acc = 100
                                          0      // pwm = 0
             );
@@ -148,7 +148,7 @@ int main()
             BOOL success = ServoLoadTraj(2, // Horizontal
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                                          5000, // pos = 2000
-                                         100000,    // vel = 100,000
+                                         -100000,    // vel = 100,000
                                          1000, // acc = 100
                                          0     // pwm = 0
             );
@@ -158,7 +158,7 @@ int main()
             BOOL success = ServoLoadTraj(2, // Horizontal
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                                          -5000, // pos = 2000
-                                         -100000,     // vel = -100,000
+                                         100000,     // vel = -100,000
                                          1000,  // acc = 100
                                          0      // pwm = 0
             );
