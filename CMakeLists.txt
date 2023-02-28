@@ -12,7 +12,7 @@ find_package(eclipse-paho-mqtt-c REQUIRED PATH C:/mqtt/paho-c)
 SET(PAHOMQTTCPP_ROOT C:/mqtt/paho-cpp)
 find_package(PahoMqttCpp REQUIRED)
 
-add_executable(mqtt main.cpp)
+add_executable(mqtt main.cpp picfunc.cpp)
 # target_include_directories(mqtt PUBLIC PahoMqttCpp)
 
 # ## For C library

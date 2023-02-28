@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\picfunc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\CMakeLists.txt" />
