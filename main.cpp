@@ -112,7 +112,7 @@ int main()
             // Perform processing on the string.
             // This is where message processing can be passed onto different variable
         }
-        if (errVer > 5)
+        if (errVer > 20)
         {
             BOOL success = ServoLoadTraj(1, // vertical
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
@@ -122,7 +122,7 @@ int main()
                                          0     // pwm = 0
             );
         }
-        else if (errVer < -5)
+        else if (errVer < -20)
         {
             BOOL success = ServoLoadTraj(1, // vertical
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
@@ -143,7 +143,7 @@ int main()
             );
         }
 
-        if (errHor > 5)
+        if (errHor > 20)
         {
             BOOL success = ServoLoadTraj(2, // Horizontal
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
@@ -153,7 +153,7 @@ int main()
                                          0     // pwm = 0
             );
         }
-        else if (errHor < -5)
+        else if (errHor < -20)
         {
             BOOL success = ServoLoadTraj(2, // Horizontal
                                          LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
