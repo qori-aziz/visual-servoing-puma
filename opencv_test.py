@@ -1,7 +1,7 @@
 import cv2
 import pixy2_raw_frame as p
 from PIL import Image
-import yolov7.detect as d
+import yolov7_new.detect as d
 import time
 import paho.mqtt.client as mqtt
 
