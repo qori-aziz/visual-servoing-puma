@@ -15,10 +15,10 @@ from .utils.general import check_img_size, check_requirements, check_imshow, non
 from .utils.plots import plot_one_box
 from .utils.torch_utils import select_device, load_classifier, time_synchronized, TracedModel
 import sys
-sys.path.insert(0, './yolov7')
+sys.path.insert(0, './yolov7_new')
 
-source = "yolov7/" 
-weights = "yolov7/best.pt"
+source = "yolov7_new/" 
+weights = "yolov7_new/weights/yolov7xl/best.pt"
 view_img = False
 save_txt = False
 imgsz = 640
@@ -52,7 +52,7 @@ def initialization():
 
 def detect(model, save_img=False):
     
-    source = "yolov7/out.jpg"
+    source = "yolov7_new/out.jpg"
     augment = False
     # source, weights, view_img, save_txt, imgsz, trace = opt.source, opt.weights, opt.view_img, opt.save_txt, opt.img_size, not opt.no_trace
     # save_img = not opt.nosave and not source.endswith('.txt')  # save inference images
@@ -133,7 +133,7 @@ def detect(model, save_img=False):
                 p, s, im0, frame = path, '', im0s, getattr(dataset, 'frame', 0)
 
             # p = Path(p)  # to Path
-            save_path = "yolov7/out0.bmp"
+            save_path = "yolov7_new/out0.bmp"
             # save_path = str(save_dir / p.name)  # img.jpg
             # txt_path = str(save_dir / 'labels' / p.stem) + ('' if dataset.mode == 'image' else f'_{frame}')  # img.txt
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
@@ -165,8 +165,10 @@ def detect(model, save_img=False):
                 cv2.waitKey(1)  # 1 millisecond
 
             t4 = time_synchronized()
+            inference_time = 1E3 * (t2 - t1)
+            nms_time = 1E3 * (t3 - t2)
             # Print time (inference + NMS)
-            print(f'{s}Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
+            print(f'{s}Done. ({inference_time:.1f}ms) Inference, ({nms_time:.1f}ms) NMS')
 
             # Save results (image with detections)
             # if save_img:
@@ -205,7 +207,7 @@ def detect(model, save_img=False):
     #     #print(f"Results saved to {save_dir}{s}")
 
     # print(f'Done. ({(1E3 * (time.time() - t0)):.1f}ms), gajelas')
-    return err_vertical, err_horizon
+    return err_vertical, err_horizon, inference_time, nms_time
 
 
 if __name__ == '__main__':
