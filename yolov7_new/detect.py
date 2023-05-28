@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, './yolov7_new')
 
 source = "yolov7_new/" 
-weights = "yolov7_new/weights/yolov7xl/best.pt"
+weights = "yolov7_new/weights/yolov7tiny/best.pt"
 view_img = False
 save_txt = False
 imgsz = 640
@@ -191,6 +191,8 @@ def detect(model, save_img=False):
                     # vid_writer.write(im0)
     err_vertical = 0
     err_horizon = 0
+    curr_horizontal= 0
+    curr_vertical= 0
     na = pred[0].to('cpu').numpy()
     if len(na) > 0:
         print(na)
@@ -207,7 +209,7 @@ def detect(model, save_img=False):
     #     #print(f"Results saved to {save_dir}{s}")
 
     # print(f'Done. ({(1E3 * (time.time() - t0)):.1f}ms), gajelas')
-    return err_vertical, err_horizon, inference_time, nms_time
+    return curr_vertical, curr_horizontal, err_vertical, err_horizon, inference_time, nms_time
 
 
 if __name__ == '__main__':
