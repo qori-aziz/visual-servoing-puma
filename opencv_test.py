@@ -37,9 +37,9 @@ try:
         # im = Image.open("out0.ppm")
         # im.save("yolov5_new/out.jpg")
 
-        curr_vertical, curr_horizontal, err_vertical, err_horizontal, inference_time, nms_time = d.detect(model)
-        client.publish("errver", err_vertical)
-        client.publish("errhor", err_horizontal)
+        na, inference_time, nms_time = d.detect(model)
+        # client.publish("errver", err_vertical)
+        # client.publish("errhor", err_horizontal)
 
         t1 = time.time()
 
@@ -51,9 +51,11 @@ try:
         one_frame_time = 1E3 * (t1 - t0)
         # data = (inference_time, nms_time, one_frame_time)
         
-        if (curr_vertical != 0) and (curr_horizontal!=0):
-            data = (curr_horizontal, curr_vertical)
-            writer.writerow(data)
+        # if (curr_vertical != 0) and (curr_horizontal!=0):
+        if len(na)>0:
+            data = (na)
+            writer.writerow(data) 
+        
         
         print(f'Total 1 frame time: ({one_frame_time:.1f}ms)')
 except KeyboardInterrupt:
