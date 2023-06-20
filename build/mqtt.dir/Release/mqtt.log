@@ -1,9 +1,2 @@
 ﻿  main.cpp
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(24,25): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(117,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(127,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(137,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(148,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(158,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(168,26): warning C4244: 'initializing': conversion from '__int64' to 'BOOL', possible loss of data
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe
