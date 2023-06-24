@@ -224,9 +224,9 @@ int main()
         //    );
         //}
 
-        std::cout << jacobiRobot << std::endl;
+       /* std::cout << jacobiRobot << std::endl;
         std::cout << jacobiRobot.determinant() << std::endl;
-        std::cout << jacobiRobot.inverse()<< std::endl;
+        std::cout << jacobiRobot.inverse()<< std::endl;*/
 
 
         //printf("errver:%d\n", errVer);

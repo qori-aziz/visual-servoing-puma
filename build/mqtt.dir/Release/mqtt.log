@@ -1,3 +1,6 @@
-﻿  main.cpp
+﻿  Building Custom Rule C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/CMakeLists.txt
+  main.cpp
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(125,24): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
+  picfunc.cpp
+  Generating Code...
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe
