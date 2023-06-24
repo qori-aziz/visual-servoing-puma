@@ -122,7 +122,7 @@ int main()
             std::string messagestring = messagePointer->get_payload_str();
             if (topicstring == "data")
             {
-                printf("%s", messagestring);
+                std::printf("%s", messagestring);
             }
             //    errver = std::stoi(messagestring);
             //}
@@ -234,9 +234,9 @@ int main()
 
         // std::cout << "errver:" + errVer << std::endl;
         // std::cout << "errHor:" + errHor << std::endl;
-        auto stop = high_resolution_clock::now();
+      /*  auto stop = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(stop - start);
-        std::cout << "duration: " << duration.count()<< std::endl;
+        std::cout << "duration: " << duration.count()<< std::endl;*/
 
 
     }
