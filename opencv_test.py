@@ -24,7 +24,7 @@ Ip = "localhost"
 client = mqtt.Client(Id)
 client.connect(Ip, 1883, 60)
 f = open('errdata.csv', 'w')
-writer = csv.writer(f)
+# writer = csv.writer(f)
 
 ## Set depth estimation
 x = np.array([
@@ -84,11 +84,11 @@ try:
             y_pred_quadratic = modelQuadratic.predict(x_.reshape(1, -1))
             print(f"predicted linear response:{y_pred_linear} \n")
             print(f"predicted quadratic response:{y_pred_quadratic} \n")
-            depth = y_pred_quadratic
+            depth = y_pred_quadratic[0]
             # data = (width,length)
             # writer.writerow(data) 
-        data = np.array([depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown])
-        client.publish("data", bytearray(data))
+        data = f'{depth:.2f},{u_lefttop},{v_lefttop},{u_rightdown},{v_rightdown}'
+        client.publish("data", data)
         t1 = time.time()
         one_frame_time = 1E3 * (t1 - t0)
         print(f'Total 1 frame time: ({one_frame_time:.1f}ms)')
