@@ -85,18 +85,6 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalOptions>%(AdditionalOptions) /external:I "C:/mqtt/paho-c/include" /external:I "C:/mqtt/paho-cpp/include" /external:I "C:/vcpkg/installed/x64-windows/include"</AdditionalOptions>
@@ -128,8 +116,7 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>
-      </Message>
+      <Message></Message>
       <Command>setlocal
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/Debug/mqtt.exe -installedDir C:/vcpkg/installed/x64-windows/debug/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
@@ -185,8 +172,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>
-      </Message>
+      <Message></Message>
       <Command>setlocal
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/Release/mqtt.exe -installedDir C:/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
@@ -242,8 +228,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>
-      </Message>
+      <Message></Message>
       <Command>setlocal
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/MinSizeRel/mqtt.exe -installedDir C:/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
@@ -298,8 +283,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message>
-      </Message>
+      <Message></Message>
       <Command>setlocal
 C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/build/RelWithDebInfo/mqtt.exe -installedDir C:/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd

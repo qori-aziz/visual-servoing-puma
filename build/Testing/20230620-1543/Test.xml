@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Win32-MSBuild"
+	BuildStamp="20230620-1543-Experimental"
+	Name="Qori-PC"
+	Generator="ctest-3.25.2"
+	CompilerName="C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe"
+	CompilerVersion="19.29.30133.0"
+	OSName="Windows"
+	Hostname="Qori-PC"
+	OSRelease=" Personal"
+	OSVersion=" (Build 19045)"
+	OSPlatform="AMD64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="5"
+	ProcessorCacheSize="-1"
+	NumberOfLogicalCPU="16"
+	NumberOfPhysicalCPU="8"
+	TotalVirtualMemory="17219"
+	TotalPhysicalMemory="16219"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2207"
+	>
+	<Testing>
+		<StartDateTime>Jun 20 22:43 SE Asia Standard Time</StartDateTime>
+		<StartTestTime>1687275827</StartTestTime>
+		<TestList/>
+		<EndDateTime>Jun 20 22:43 SE Asia Standard Time</EndDateTime>
+		<EndTestTime>1687275827</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
