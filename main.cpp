@@ -122,7 +122,8 @@ int main()
             std::string messagestring = messagePointer->get_payload_str();
             if (topicstring == "data")
             {
-                std::printf("%s", messagestring);
+                std::cout << messagestring << std::endl;
+                //std::printf("%s", messagestring);
             }
             //    errver = std::stoi(messagestring);
             //}
