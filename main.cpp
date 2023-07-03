@@ -13,6 +13,16 @@
 using namespace std;
 using namespace std::chrono;
 
+
+const double u1_ref = 83;
+const double v1_ref = 25;
+const double u2_ref = 83;
+const double v2_ref = 193;
+const double u3_ref = 257;
+const double v3_ref = 25;
+const double u4_ref = 257;
+const double v4_ref = 193;
+
 // With the library header files included, continue by defining a main function.
 int main()
 {
@@ -23,14 +33,14 @@ int main()
     double q4 = M_PI;
     double q5 = -M_PI/2;
     double q6 = 0;
-    double u1 = 80;
-    double v1 = 116;
-    double u2 = 169;
-    double v2 = 116;
-    double u3 = 80;
-    double v3 = 206;
-    double u4 = 169;
-    double v4 = 206;
+    double u1 = 0;
+    double v1 = 0;
+    double u2 = 0;
+    double v2 = 0;
+    double u3 = 0;
+    double v3 = 0;
+    double u4 = 0;
+    double v4 = 0;
     double Z = 50;
 
     // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
@@ -174,6 +184,7 @@ int main()
 
 
         if (Z == 0) {
+            // Add zero set here
             continue;
         }
      
@@ -200,8 +211,35 @@ int main()
             {0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
         };
 
-        cout << "matrix" << endl;
-        cout << jacobiImage << endl;
+  /*      cout << "matrix" << endl;
+        cout << jacobiImage << endl;*/
+
+        if (jacobiRobot.determinant() == 0) {
+            // Add zero set here
+            continue;
+        }
+
+        if (!jacobiImage.completeOrthogonalDecomposition().isInvertible()) {
+            continue;
+        }
+
+        // Calculate error vec
+        Eigen::Matrix<double, 8, 1> errorVect{
+            {u1_ref - u1},
+            {v1_ref - v1},
+            {u2_ref - u2},
+            {v2_ref - v2},
+            {u3_ref - u3},
+            {v3_ref - v3},
+            {u4_ref - u4},
+            {v4_ref - v4},
+        };
+
+
+        // Calculate joint speed
+        Eigen::Matrix<double, 6, 1>jointSpeed = 0.8 * jacobiRobot.inverse()*jacobiImage.completeOrthogonalDecomposition().pseudoInverse()*errorVect;
+        cout << "Calculated joint speed" << endl;
+        cout << jointSpeed << endl;
 
         //  
         //if (errVer > 20)
@@ -266,19 +304,15 @@ int main()
         //    );
         //}
 
-       /* std::cout << jacobiRobot << std::endl;
-        std::cout << jacobiRobot.determinant() << std::endl;
-        std::cout << jacobiRobot.inverse()<< std::endl;*/
-
 
         //printf("errver:%d\n", errVer);
         //printf("errHor:%d\n", errHor);
 
         // std::cout << "errver:" + errVer << std::endl;
         // std::cout << "errHor:" + errHor << std::endl;
-      /*  auto stop = high_resolution_clock::now();
+        auto stop = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(stop - start);
-        std::cout << "duration: " << duration.count()<< std::endl;*/
+        std::cout << "duration: " << duration.count()<< std::endl;
 
 
     }
