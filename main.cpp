@@ -185,6 +185,7 @@ int main()
 
         if (Z == 0) {
             // Add zero set here
+            cout << "depth zero" << endl;
             continue;
         }
      
@@ -216,10 +217,12 @@ int main()
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
+            cout << "jacobiRobot not invertible" << endl;
             continue;
         }
 
         if (!jacobiImage.completeOrthogonalDecomposition().isInvertible()) {
+            cout << "jacobiImage not invertible" << endl;
             continue;
         }
 
