@@ -221,10 +221,8 @@ int main()
             continue;
         }
 
-        if (!jacobiImage.completeOrthogonalDecomposition().isInvertible()) {
-            cout << "jacobiImage not invertible" << endl;
-            continue;
-        }
+        // Calculate Jacobian image pseudoinverse
+        Eigen::Matrix<double, 6, 8>jacobiImagePInv = (jacobiImage.transpose() * jacobiImage).inverse() * jacobiImage.transpose();
 
         // Calculate error vec
         Eigen::Matrix<double, 8, 1> errorVect{
