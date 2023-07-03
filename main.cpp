@@ -260,7 +260,7 @@ int main()
 
         // write to csv
         ofstream myfile;
-        myfile.open("speed.csv");
+        myfile.open("speed.csv", std::ios::out | std::ios::app);
         myfile << speed1;
         myfile << ";";
         myfile << speed2;
