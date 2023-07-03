@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <fstream>
 using namespace std;
 using namespace std::chrono;
 
@@ -22,6 +23,13 @@ const double u3_ref = 257;
 const double v3_ref = 25;
 const double u4_ref = 257;
 const double v4_ref = 193;
+const double decoder1 = 50000;
+const double decoder2 = 60000;
+const double decoder3 = 180000;
+const double decoder4 = 30000;
+const double decoder5 = 42000;
+const double decoder6 = 50000;
+
 
 // With the library header files included, continue by defining a main function.
 int main()
@@ -238,10 +246,35 @@ int main()
 
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 0.8 * jacobiRobot.inverse()*jacobiImage.completeOrthogonalDecomposition().pseudoInverse()*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 10 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
+        // Convert from rad/s to decoder/second
+        double speed1 = jointSpeed(0, 0) * 0.15915 * decoder1;
+        double speed2 = jointSpeed(1, 0) * 0.15915 * decoder2;
+        double speed3 = jointSpeed(2, 0) * 0.15915 * decoder3;
+        double speed4 = jointSpeed(3, 0) * 0.15915 * decoder4;
+        double speed5 = jointSpeed(4, 0) * 0.15915 * decoder5;
+        double speed6 = jointSpeed(5, 0) * 0.15915 * decoder6;
+
+        // write to csv
+        ofstream myfile;
+        myfile.open("speed.csv");
+        myfile << speed1;
+        myfile << ";";
+        myfile << speed2;
+        myfile << ";";
+        myfile << speed3;
+        myfile << ";";
+        myfile << speed4;
+        myfile << ";";
+        myfile << speed5;
+        myfile << ";";
+        myfile << speed6;
+        myfile << ";\n";
+      
+        myfile.close();
         //  
         //if (errVer > 20)
         //{
