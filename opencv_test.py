@@ -26,6 +26,8 @@ client.connect(Ip, 1883, 60)
 f = open('errdata.csv', 'w')
 # writer = csv.writer(f)
 
+# Desired feature : 25.26,83.0,25.0,257.0,193.0 (D, u1,v1,u4,v4)
+
 ## Set depth estimation
 x = np.array([
     [206.2868217],
