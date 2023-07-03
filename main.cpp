@@ -1,4 +1,3 @@
-#include <iostream>
 #define _USE_MATH_DEFINES
 
 #include <mqtt/client.h> // Mosquitto client
@@ -8,8 +7,10 @@
 #include "picfunc.h"
 #include <math.h>
 #include <Eigen/Dense>
-
+#include <iostream>
+#include <string>
 #include <chrono>
+using namespace std;
 using namespace std::chrono;
 
 // With the library header files included, continue by defining a main function.
@@ -31,6 +32,9 @@ int main()
     double u4 = 169;
     double v4 = 206;
     double Z = 50;
+
+    // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
+    string mockData = "0,0,0,0,0";
 
     HINSTANCE hModule = LoadLibraryA("NMCLIB04v64.dll");
     Func_NmcInit NmcInit = LoadNmcInit(hModule);
@@ -122,21 +126,57 @@ int main()
             std::string messagestring = messagePointer->get_payload_str();
             if (topicstring == "data")
             {
-                std::cout << messagestring << std::endl;
-                //std::printf("%s", messagestring);
+                //std::cout << messagestring << std::endl;
+                mockData = messagestring;
             }
-            //    errver = std::stoi(messagestring);
-            //}
-            //if (topicstring == "errhor")
-            //{
-            //    // printf("%s", messagestring);
-            //    errhor = std::stoi(messagestring);
-            //}
-            // print payload string to console (debugging).
-
-            // perform processing on the string.
-            // this is where message processing can be passed onto different variable
         }
+
+        vector<string> strings;
+
+        string s;
+        istringstream ss{ mockData };
+
+        // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
+        int i = 0;
+        while (getline(ss, s, ',')) {
+            double temp = stod(s);
+            switch (i) {
+            case 0:
+                i++;
+                Z = temp;
+                break;
+            case 1:
+                i++;
+                u1 = temp;
+                u3 = temp;
+                break;
+            case 2:
+                i++;
+                v1 = temp;
+                v3 = temp;
+                break;
+            case 3:
+                i++;
+                u2 = temp;
+                u4 = temp;
+                break;
+            case 4:
+                i = 0;
+                v2 = temp;
+                v4 = temp;
+                break;
+            default:
+                i = 0;
+                break;
+            }
+            strings.push_back(s);
+        }
+
+
+        if (Z == 0) {
+            continue;
+        }
+     
 
         // Calculate Jacobian Robot matrix
         Eigen::Matrix<double, 6, 6> jacobiRobot{
@@ -160,7 +200,8 @@ int main()
             {0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
         };
 
-
+        cout << "matrix" << endl;
+        cout << jacobiImage << endl;
 
         //  
         //if (errVer > 20)
