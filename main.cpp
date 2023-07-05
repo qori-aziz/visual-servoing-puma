@@ -92,7 +92,7 @@ int main()
         printf("OK\n");
     }
 
-    for (int i = 1; i <= 2; i++)
+    for (int i = 1; i <= 3; i++)
     {
         ServoStopMotor(i, AMP_ENABLE | MOTOR_OFF);   // enable amp
         ServoStopMotor(i, AMP_ENABLE | STOP_ABRUPT); // stop at current pos.
