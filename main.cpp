@@ -378,14 +378,14 @@ int main()
 		ServoLoadTraj(3, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            -speed1,    // vel = 100,000
+            speed1,    // vel = 100,000
 			1000, // acc = 100
 			0     // pwm = 0
 		);
 		ServoLoadTraj(2, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            -speed2,     // vel = -100,000
+            speed2,     // vel = -100,000
 			1000,  // acc = 100
 			0      // pwm = 0
 		);
@@ -393,7 +393,7 @@ int main()
 		ServoLoadTraj(1, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            -speed3,     // vel = -100,000
+            speed3,     // vel = -100,000
 			1000,  // acc = 100
 			0      // pwm = 0
 		);
