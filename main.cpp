@@ -119,7 +119,7 @@ int main()
     std::string id = "consumer";
     // construct a client using the ip and id, specifying usage of mqtt v5.
     mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
-    // use the connect method of the client to establish a connection to the broker.
+     // use the connect method of the client to establish a connection to the broker.
     client.connect();
     // std::printf("tes4");
     // in order to receive messages from the broker, specify a topic to subscribe to.
@@ -197,6 +197,28 @@ int main()
 
         if (Z == 0) {
             // Add zero set here
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
             cout << "depth zero" << endl;
             continue;
         }
