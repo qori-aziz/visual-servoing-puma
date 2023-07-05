@@ -23,6 +23,12 @@ const double u3_ref = 257;
 const double v3_ref = 25;
 const double u4_ref = 257;
 const double v4_ref = 193;
+const double q1_ref = 0;
+const double q2_ref = 0;
+const double q3_ref = 0;
+const double q4_ref = M_PI;
+const double q5_ref = -M_PI / 2;
+const double q6_ref = 0;
 const double decoder1 = 50000;
 const double decoder2 = 60000;
 const double decoder3 = 180000;
@@ -251,9 +257,9 @@ int main()
      
 
         // Calulate new q1 to q6
-        q1 = q1 + (pos1 / decoder1 * 6.2832);
-        q2 = q2 + (pos2 / decoder2 * 6.2832);
-        q3 = q3 + (pos3 / decoder3 * 6.2832);
+        q1 = q1_ref + (pos1 / decoder1 * 6.2832);
+        q2 = q2_ref + (pos2 / decoder2 * 6.2832);
+        q3 = q3_ref + (pos3 / decoder3 * 6.2832);
 
         // write to csv
         ofstream position;
@@ -368,17 +374,18 @@ int main()
         myfile.close();
   
         // Be careful when addressing. Address 1 is farthest from the PC
+        // Seems that the desired speed vs real speed is reversed
 		ServoLoadTraj(3, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            speed1,    // vel = 100,000
+            -speed1,    // vel = 100,000
 			1000, // acc = 100
 			0     // pwm = 0
 		);
 		ServoLoadTraj(2, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            speed2,     // vel = -100,000
+            -speed2,     // vel = -100,000
 			1000,  // acc = 100
 			0      // pwm = 0
 		);
@@ -386,7 +393,7 @@ int main()
 		ServoLoadTraj(1, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
-            speed3,     // vel = -100,000
+            -speed3,     // vel = -100,000
 			1000,  // acc = 100
 			0      // pwm = 0
 		);
