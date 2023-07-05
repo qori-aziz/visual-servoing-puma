@@ -224,9 +224,9 @@ int main()
         }
 
         // get current position
-        unsigned char addr1 = 1; //module address
-        unsigned char addr2 = 2; //module address
-        unsigned char addr3 = 3; //module address
+        unsigned char addrMotor1 = 3; //module address
+        unsigned char addrMotor2 = 2; //module address
+        unsigned char addrMotor3 = 1; //module address
         //unsigned char addr4 = 4; //module address
         //unsigned char addr5 = 5; //module address
         //unsigned char addr6 = 6; //module address
@@ -236,23 +236,36 @@ int main()
 
         stat_items = SEND_POS | SEND_VEL; //specify both position and velocity
          // should be read from contorller
-        NmcReadStatus(addr1, stat_items); //Read data from controllers
-        pos1 = ServoGetPos(addr1); //retrieve the position and velocity data
-        vel1 = ServoGetVel(addr1); //from the local internal data structure
+        // be careful when addressing. Motor 1 is farthest
+        NmcReadStatus(addrMotor1, stat_items); //Read data from controllers
+        pos1 = ServoGetPos(addrMotor1); //retrieve the position and velocity data
+        vel1 = ServoGetVel(addrMotor1); //from the local internal data structure
 
-        NmcReadStatus(addr2, stat_items); //Read data from controllers
-        pos2 = ServoGetPos(addr2); //retrieve the position and velocity data
-        vel2 = ServoGetVel(addr2); //from the local internal data structure
+        NmcReadStatus(addrMotor2, stat_items); //Read data from controllers
+        pos2 = ServoGetPos(addrMotor2); //retrieve the position and velocity data
+        vel2 = ServoGetVel(addrMotor2); //from the local internal data structure
 
-        NmcReadStatus(addr3, stat_items); //Read data from controllers
-        pos3 = ServoGetPos(addr3); //retrieve the position and velocity data
-        vel3 = ServoGetVel(addr3); //from the local internal data structure
+        NmcReadStatus(addrMotor3, stat_items); //Read data from controllers
+        pos3 = ServoGetPos(addrMotor3); //retrieve the position and velocity data
+        vel3 = ServoGetVel(addrMotor3); //from the local internal data structure
      
 
         // Calulate new q1 to q6
         q1 = q1 + (pos1 / decoder1 * 6.2832);
         q2 = q2 + (pos2 / decoder2 * 6.2832);
         q3 = q3 + (pos3 / decoder3 * 6.2832);
+
+        // write to csv
+        ofstream position;
+        position.open("realPos.csv", std::ios::out | std::ios::app);
+        position << q1;
+        position << ",";
+        position << q2;
+        position << ",";
+        position << q3;
+        position << ",\n";
+
+        position.close();
 
         // Calculate Jacobian Robot matrix
         Eigen::Matrix<double, 6, 6> jacobiRobot{
@@ -281,7 +294,7 @@ int main()
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
-            ServoLoadTraj(1, // vertical
+            ServoLoadTraj(3, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
                 0,    // vel = 100,000
@@ -296,7 +309,7 @@ int main()
                 0      // pwm = 0
             );
 
-            ServoLoadTraj(3, // vertical
+            ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
                 0,     // vel = -100,000
@@ -340,21 +353,22 @@ int main()
         ofstream myfile;
         myfile.open("speed.csv", std::ios::out | std::ios::app);
         myfile << speed1;
-        myfile << ";";
+        myfile << ",";
         myfile << speed2;
-        myfile << ";";
+        myfile << ",";
         myfile << speed3;
-        myfile << ";";
+        myfile << ",";
         myfile << speed4;
-        myfile << ";";
+        myfile << ",";
         myfile << speed5;
-        myfile << ";";
+        myfile << ",";
         myfile << speed6;
-        myfile << ";\n";
+        myfile << ",\n";
       
         myfile.close();
   
-		ServoLoadTraj(1, // vertical
+        // Be careful when addressing. Address 1 is farthest from the PC
+		ServoLoadTraj(3, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
             speed1,    // vel = 100,000
@@ -369,7 +383,7 @@ int main()
 			0      // pwm = 0
 		);
 
-		ServoLoadTraj(3, // vertical
+		ServoLoadTraj(1, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			5000, // pos = 2000
             speed3,     // vel = -100,000
