@@ -375,7 +375,7 @@ int main()
   
         // Be careful when addressing. Address 1 is farthest from the PC
         // Seems that the desired speed vs real speed is reversed
-        if (speed1 > 0) {
+        //if (speed1 > 0) 
             ServoLoadTraj(3, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
@@ -383,18 +383,18 @@ int main()
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        }
-        else if (speed1 < 0) {
-            ServoLoadTraj(3, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-                5000, // pos = 2000
-                speed1,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-        }
+        //}
+        //else if (speed1 < 0) {
+        //    ServoLoadTraj(3, // vertical
+        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+        //        5000, // pos = 2000
+        //        speed1,    // vel = 100,000
+        //        1000, // acc = 100
+        //        0     // pwm = 0
+        //    );
+        //}
 
-        if (speed2 > 0) {
+        //if (speed2 > 0) {
             ServoLoadTraj(2, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
@@ -402,18 +402,18 @@ int main()
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        }
-        else if (speed2 < 0) {
-            ServoLoadTraj(2, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-                5000, // pos = 2000
-                speed2,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-        }
+        //}
+        //else if (speed2 < 0) {
+        //    ServoLoadTraj(2, // vertical
+        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+        //        5000, // pos = 2000
+        //        speed2,    // vel = 100,000
+        //        1000, // acc = 100
+        //        0     // pwm = 0
+        //    );
+        //}
 		
-        if (speed3 > 0) {
+        //if (speed3 > 0) {
             ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
@@ -421,16 +421,16 @@ int main()
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        }
-        else if (speed3 < 0) {
-            ServoLoadTraj(1, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-                5000, // pos = 2000
-                speed3,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-        }
+        //}
+        //else if (speed3 < 0) {
+        //    ServoLoadTraj(1, // vertical
+        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+        //        5000, // pos = 2000
+        //        speed3,    // vel = 100,000
+        //        1000, // acc = 100
+        //        0     // pwm = 0
+        //    );
+        //}
   
 
         //printf("errver:%d\n", errVer);
