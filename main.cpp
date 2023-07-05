@@ -28,7 +28,8 @@ const double decoder2 = 60000;
 const double decoder3 = 180000;
 const double decoder4 = 30000;
 const double decoder5 = 42000;
-const double decoder6 = 50000;
+const double decoder6 = 25000;
+const double servoticktime = 0.000512;
 
 
 // With the library header files included, continue by defining a main function.
@@ -60,52 +61,55 @@ int main()
     Func_NmcNoOp NmcNoOp = LoadNmcNoOp(hModule);
     Func_NmcGetStat NmcGetStat = LoadNmcGetStat(hModule);
     Func_NmcShutdown NmcShutdown = LoadNmcShutdown(hModule);
+    Func_NmcReadStatus NmcReadStatus =  LoadNmcReadStatus(hModule);
     Func_ServoResetPos ServoResetPos = LoadServoResetPos(hModule);
     Func_ServoLoadTraj ServoLoadTraj = LoadServoLoadTraj(hModule);
     Func_ServoStopMotor ServoStopMotor = LoadServoStopMotor(hModule);
     Func_ServoSetGain ServoSetGain = LoadServoSetGain(hModule);
+    Func_ServoGetPos ServoGetPos = LoadServoGetPos(hModule);
+    Func_ServoGetVel ServoGetVel = LoadServoGetVel(hModule);
 
-    //int numberOfModules = NmcInit("COM1:", 19200);
-    //printf("Number of Modules detected: %d\n", numberOfModules);
-    //if (numberOfModules == 0)
-    //{
-    //    // Connect to COM1 for linux
-    //    //  int numberOfModules = NmcInit("COM1:", 19200);
-    //    // printf("Number of Modules detected: %d\n", numberOfModules);
-    //    // if (numberOfModules == 0) 
-    //    {
-    //    printf("failed to initialize. Shutdown.");
-    //    NmcShutdown();
-    //    FreeLibrary(hModule);
-    //    printf("Done.\n");
-    //    exit(0);
-    //    return 0;
-    //    }
-    //}
+    int numberOfModules = NmcInit("COM1:", 19200);
+    printf("Number of Modules detected: %d\n", numberOfModules);
+    if (numberOfModules == 0)
+    {
+        // Connect to COM1 for linux
+        //  int numberOfModules = NmcInit("COM1:", 19200);
+        // printf("Number of Modules detected: %d\n", numberOfModules);
+        // if (numberOfModules == 0) 
+        {
+        printf("failed to initialize. Shutdown.");
+        NmcShutdown();
+        FreeLibrary(hModule);
+        printf("Done.\n");
+        exit(0);
+        return 0;
+        }
+    }
 
-    //if (NmcGetModType(2) == SERVOMODTYPE)
-    //{
-    //    printf("OK\n");
-    //}
+    if (NmcGetModType(2) == SERVOMODTYPE)
+    {
+        printf("OK\n");
+    }
 
-    //for (int i = 1; i <= 2; i++)
-    //{
-    //    ServoStopMotor(i, AMP_ENABLE | MOTOR_OFF);   // enable amp
-    //    ServoStopMotor(i, AMP_ENABLE | STOP_ABRUPT); // stop at current pos.
-    //    ServoResetPos(i);                            // reset the posiiton counter to 0
+    for (int i = 1; i <= 2; i++)
+    {
+        ServoStopMotor(i, AMP_ENABLE | MOTOR_OFF);   // enable amp
+        ServoStopMotor(i, AMP_ENABLE | STOP_ABRUPT); // stop at current pos.
+        ServoResetPos(i);                            // reset the posiiton counter to 0
 
-    //    ServoSetGain(i,    // axis = 1
-    //                 100,  // Kp = 100
-    //                 1000, // Kd = 1000
-    //                 0,    // Ki = 0
-    //                 0,    // IL = 0
-    //                 255,  // OL = 255
-    //                 0,    // CL = 0
-    //                 4000, // EL = 4000
-    //                 1,    // SR = 1
-    //                 0     // DC = 0
-    //    );
-    //}
+        ServoSetGain(i,    // axis = 1
+                     100,  // Kp = 100
+                     1000, // Kd = 1000
+                     0,    // Ki = 0
+                     0,    // IL = 0
+                     255,  // OL = 255
+                     0,    // CL = 0
+                     4000, // EL = 4000
+                     1,    // SR = 1
+                     0     // DC = 0
+        );
+    }
 
     std::printf("tes1");
     // in order to connect the mqtt client to a broker,
@@ -196,7 +200,37 @@ int main()
             cout << "depth zero" << endl;
             continue;
         }
+
+        // get current position
+        unsigned char addr1 = 1; //module address
+        unsigned char addr2 = 2; //module address
+        unsigned char addr3 = 3; //module address
+        //unsigned char addr4 = 4; //module address
+        //unsigned char addr5 = 5; //module address
+        //unsigned char addr6 = 6; //module address
+        long pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
+        short int vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
+        unsigned char stat_items; //specify which data should be returned
+
+        stat_items = SEND_POS | SEND_VEL; //specify both position and velocity
+         // should be read from contorller
+        NmcReadStatus(addr1, stat_items); //Read data from controllers
+        pos1 = ServoGetPos(addr1); //retrieve the position and velocity data
+        vel1 = ServoGetVel(addr1); //from the local internal data structure
+
+        NmcReadStatus(addr2, stat_items); //Read data from controllers
+        pos2 = ServoGetPos(addr2); //retrieve the position and velocity data
+        vel2 = ServoGetVel(addr2); //from the local internal data structure
+
+        NmcReadStatus(addr3, stat_items); //Read data from controllers
+        pos3 = ServoGetPos(addr3); //retrieve the position and velocity data
+        vel3 = ServoGetVel(addr3); //from the local internal data structure
      
+
+        // Calulate new q1 to q6
+        q1 = q1 + (pos1 / decoder1 * 6.2832);
+        q2 = q2 + (pos2 / decoder2 * 6.2832);
+        q3 = q3 + (pos3 / decoder3 * 6.2832);
 
         // Calculate Jacobian Robot matrix
         Eigen::Matrix<double, 6, 6> jacobiRobot{
@@ -225,6 +259,28 @@ int main()
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
             cout << "jacobiRobot not invertible" << endl;
             continue;
         }
@@ -246,17 +302,17 @@ int main()
 
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 10 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 1.5 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
-        // Convert from rad/s to decoder/second
-        double speed1 = jointSpeed(0, 0) * 0.15915 * decoder1;
-        double speed2 = jointSpeed(1, 0) * 0.15915 * decoder2;
-        double speed3 = jointSpeed(2, 0) * 0.15915 * decoder3;
-        double speed4 = jointSpeed(3, 0) * 0.15915 * decoder4;
-        double speed5 = jointSpeed(4, 0) * 0.15915 * decoder5;
-        double speed6 = jointSpeed(5, 0) * 0.15915 * decoder6;
+        // Convert from rad/s to decoder/tick time
+        double speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
+        double speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
+        double speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
+        double speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
+        double speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
+        double speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
         // write to csv
         ofstream myfile;
@@ -275,69 +331,30 @@ int main()
         myfile << ";\n";
       
         myfile.close();
-        //  
-        //if (errVer > 20)
-        //{
-        //    BOOL success = ServoLoadTraj(1, // vertical
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 5000, // pos = 2000
-        //                                 -50000,    // vel = 100,000
-        //                                 1000, // acc = 100
-        //                                 0     // pwm = 0
-        //    );
-        //}
-        //else if (errVer < -20)
-        //{
-        //    BOOL success = ServoLoadTraj(1, // vertical
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 5000, // pos = 2000
-        //                                 50000,     // vel = -100,000
-        //                                 1000,  // acc = 100
-        //                                 0      // pwm = 0
-        //    );
-        //}
-        //else
-        //{
-        //    BOOL success = ServoLoadTraj(1, // vertical
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 5000,    // pos = 2000
-        //                                 0,    // vel = 0
-        //                                 1000, // acc = 100
-        //                                 0     // pwm = 0
-        //    );
-        //}
+  
+		ServoLoadTraj(1, // vertical
+			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+			5000, // pos = 2000
+            speed1,    // vel = 100,000
+			1000, // acc = 100
+			0     // pwm = 0
+		);
+		ServoLoadTraj(2, // vertical
+			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+			5000, // pos = 2000
+            speed2,     // vel = -100,000
+			1000,  // acc = 100
+			0      // pwm = 0
+		);
 
-        //if (errHor > 20)
-        //{
-        //    BOOL success = ServoLoadTraj(2, // Horizontal
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 5000, // pos = 2000
-        //                                 50000,    // vel = 100,000
-        //                                 1000, // acc = 100
-        //                                 0     // pwm = 0
-        //    );
-        //}
-        //else if (errHor < -20)
-        //{
-        //    BOOL success = ServoLoadTraj(2, // Horizontal
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 -5000, // pos = 2000
-        //                                 -50000,     // vel = -100,000
-        //                                 1000,  // acc = 100
-        //                                 0      // pwm = 0
-        //    );
-        //}
-        //else
-        //{
-        //    BOOL success = ServoLoadTraj(2, // Horizontal
-        //                                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-        //                                 0,    // pos = 2000
-        //                                 0,    // vel = 0
-        //                                 1000, // acc = 100
-        //                                 0     // pwm = 0
-        //    );
-        //}
-
+		ServoLoadTraj(3, // vertical
+			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+			5000, // pos = 2000
+            speed3,     // vel = -100,000
+			1000,  // acc = 100
+			0      // pwm = 0
+		);
+  
 
         //printf("errver:%d\n", errVer);
         //printf("errHor:%d\n", errHor);

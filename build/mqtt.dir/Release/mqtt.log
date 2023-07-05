@@ -1,2 +1,18 @@
 ﻿  main.cpp
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(72,25): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(218,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(219,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(222,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(223,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(226,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(227,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(338,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(345,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(353,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(211,44): warning C4101: 'pos6': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(212,49): warning C4101: 'vel6': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(211,32): warning C4101: 'pos4': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(212,43): warning C4101: 'vel5': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(212,37): warning C4101: 'vel4': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(211,38): warning C4101: 'pos5': unreferenced local variable
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe

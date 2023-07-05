@@ -1,7 +1,7 @@
 /// @brief
 /// @return
 
-// Module type definitions:
+// Module type definitions: liba
 #define SERVOMODTYPE 0
 #define ADCMODTYPE 1
 #define IOMODTYPE 2
@@ -28,11 +28,22 @@
 #define STOP_HERE 0x10	 // set to stop at position (4 add'l data bytes required)
 #define ADV_FEATURE 0x20 // enable features in ver. CMC
 
+//Servo Module STATUSITEMS bit definitions (for DEF_STAT and READ_STAT):
+#define	SEND_POS	  0x01	//4 bytes data
+#define	SEND_AD		  0x02	//1 byte
+#define	SEND_VEL	  0x04	//2 bytes
+#define SEND_AUX	  0x08	//1 byte
+#define SEND_HOME	  0x10	//4 bytes
+#define SEND_ID		  0x20	//2 bytes
+#define SEND_PERROR	  0x40  //2 bytes
+#define SEND_NPOINTS  0x80  //1 byte
+
 typedef long long int (*Func_NmcInit)(const char *, unsigned int);
 typedef long long int (*Func_NmcGetModType)(byte addr);
 typedef long long int (*Func_NmcNoOp)(byte addr);
 typedef long long int (*Func_NmcGetStat)(byte addr);
 typedef long long int (*Func_NmcShutdown)(void);
+typedef long long int (*Func_NmcReadStatus)(byte addr, byte statusitems);
 
 typedef long long int (*Func_ServoResetPos)(byte addr);
 typedef long long int (*Func_ServoStopMotor)(byte addr, byte mode);
@@ -40,14 +51,20 @@ typedef long long int (*Func_ServoLoadTraj)(byte addr, byte mode, long pos, long
 typedef long long int (*Func_ServoSetGain)(byte addr, short int kp, short int kd, short int ki,
 										   short int il, byte ol, byte cl, short int el,
 										   byte sr, byte dc);
+typedef long long int (*Func_ServoGetPos)(byte addr);
+typedef long long int (*Func_ServoGetVel)(byte addr);
+
 
 extern "C" Func_NmcInit LoadNmcInit(HINSTANCE hModule);
 extern "C" Func_NmcGetModType LoadNmcGetModType(HINSTANCE hModule);
 extern "C" Func_NmcNoOp LoadNmcNoOp(HINSTANCE hModule);
 extern "C" Func_NmcGetStat LoadNmcGetStat(HINSTANCE hModule);
 extern "C" Func_NmcShutdown LoadNmcShutdown(HINSTANCE hModule);
+extern "C" Func_NmcReadStatus LoadNmcReadStatus(HINSTANCE hModule);
 
 extern "C" Func_ServoResetPos LoadServoResetPos(HINSTANCE hModule);
 extern "C" Func_ServoStopMotor LoadServoStopMotor(HINSTANCE hModule);
 extern "C" Func_ServoLoadTraj LoadServoLoadTraj(HINSTANCE hModule);
 extern "C" Func_ServoSetGain LoadServoSetGain(HINSTANCE hModule);
+extern "C" Func_ServoGetPos LoadServoGetPos(HINSTANCE hModule);
+extern "C" Func_ServoGetVel LoadServoGetVel(HINSTANCE hModule);
