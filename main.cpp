@@ -324,7 +324,7 @@ int main()
 
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 1.5 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 0.3 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 

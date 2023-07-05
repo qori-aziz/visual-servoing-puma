@@ -1,4 +1,5 @@
-﻿  main.cpp
+﻿  Building Custom Rule C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/CMakeLists.txt
+  main.cpp
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(72,25): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(241,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
@@ -15,4 +16,6 @@ C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(233,32): war
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(234,43): warning C4101: 'vel5': unreferenced local variable
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(234,37): warning C4101: 'vel4': unreferenced local variable
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(233,38): warning C4101: 'pos5': unreferenced local variable
+  picfunc.cpp
+  Generating Code...
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe
