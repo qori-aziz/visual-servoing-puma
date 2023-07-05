@@ -348,12 +348,12 @@ int main()
         cout << jointSpeed << endl;
 
         // Convert from rad/s to decoder/tick time
-        double speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
-        double speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
-        double speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
-        double speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
-        double speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
-        double speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
+        int speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
+        int speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
+        int speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
+        int speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
+        int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
+        int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
         // write to csv
         ofstream myfile;
@@ -375,28 +375,62 @@ int main()
   
         // Be careful when addressing. Address 1 is farthest from the PC
         // Seems that the desired speed vs real speed is reversed
-		ServoLoadTraj(3, // vertical
-			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-			5000, // pos = 2000
-            speed1,    // vel = 100,000
-			1000, // acc = 100
-			0     // pwm = 0
-		);
-		ServoLoadTraj(2, // vertical
-			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-			5000, // pos = 2000
-            speed2,     // vel = -100,000
-			1000,  // acc = 100
-			0      // pwm = 0
-		);
+        if (speed1 > 0) {
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                speed1,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
+        else if (speed1 < 0) {
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+                5000, // pos = 2000
+                speed1,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
 
-		ServoLoadTraj(1, // vertical
-			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-			5000, // pos = 2000
-            speed3,     // vel = -100,000
-			1000,  // acc = 100
-			0      // pwm = 0
-		);
+        if (speed2 > 0) {
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                speed2,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
+        else if (speed2 < 0) {
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+                5000, // pos = 2000
+                speed2,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
+		
+        if (speed3 > 0) {
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                speed3,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
+        else if (speed3 < 0) {
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
+                5000, // pos = 2000
+                speed3,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+        }
   
 
         //printf("errver:%d\n", errVer);

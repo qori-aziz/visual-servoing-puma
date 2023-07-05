@@ -6,9 +6,12 @@ C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(251,27): war
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(252,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(255,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(256,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(381,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(388,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(396,13): warning C4244: 'argument': conversion from 'double' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(351,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(352,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(353,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(354,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(355,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(356,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(239,44): warning C4101: 'pos6': unreferenced local variable
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,49): warning C4101: 'vel6': unreferenced local variable
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(239,32): warning C4101: 'pos4': unreferenced local variable
