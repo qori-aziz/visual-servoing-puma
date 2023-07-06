@@ -177,7 +177,7 @@ int main()
             case 1:
                 i++;
                 u1 = temp;
-                u3 = temp;
+                u2 = temp;
                 break;
             case 2:
                 i++;
@@ -186,7 +186,7 @@ int main()
                 break;
             case 3:
                 i++;
-                u2 = temp;
+                u3 = temp;
                 u4 = temp;
                 break;
             case 4:
@@ -429,6 +429,22 @@ int main()
         double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2)+ pow(errorVect(5, 0), 2));
         ofstream errorVisual;
         errorVisual.open("errorvisual.csv", std::ios::out | std::ios::app);
+        errorVisual << u1;
+        errorVisual << ",";
+        errorVisual << v1;
+        errorVisual << ",";
+        errorVisual << u2;
+        errorVisual << ",";
+        errorVisual << v2;
+        errorVisual << ",";
+        errorVisual << u3;
+        errorVisual << ",";
+        errorVisual << v3;
+        errorVisual << ",";
+        errorVisual << u4;
+        errorVisual << ",";
+        errorVisual << v4;
+        errorVisual << ",";
         errorVisual << errorVect(0,0);
         errorVisual << ",";
         errorVisual << errorVect(1,0);
