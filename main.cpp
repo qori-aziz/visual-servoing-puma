@@ -259,8 +259,8 @@ int main()
         unsigned char addrMotor4 = 3; //module address
         unsigned char addrMotor5 = 2; //module address
         unsigned char addrMotor6 = 1; //module address
-        INT64 pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
-        INT64 vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
+        long int pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
+        short int vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
         unsigned char stat_items; //specify which data should be returned
 
         stat_items = SEND_POS | SEND_VEL; //specify both position and velocity
@@ -294,12 +294,12 @@ int main()
      
 
         // Calulate new q1 to q6
-        q1 = q1_ref + (pos1 / decoder1 * 6.2832);
-        q2 = q2_ref + (pos2 / decoder2 * 6.2832);
-        q3 = q3_ref + (pos3 / decoder3 * 6.2832);
-        q4 = q4_ref + (pos4 / decoder3 * 6.2832);;
-        q5 = q5_ref + (pos5 / decoder3 * 6.2832);;
-        q6 = q6_ref + (pos6 / decoder3 * 6.2832);;
+        q1 = (q1_ref + (pos1 / decoder1 * 6.2832) * -1);
+        q2 = (q2_ref + (pos2 / decoder2 * 6.2832));
+        q3 = (q3_ref + (pos3 / decoder3 * 6.2832));
+        q4 = (q4_ref + (pos4 / decoder3 * 6.2832));
+        q5 = (q5_ref + (pos5 / decoder3 * 6.2832)*-1 );
+        q6 = q6_ref + (pos6 / decoder3 * 6.2832);
 
         // write to csv
         ofstream position;
@@ -427,44 +427,44 @@ int main()
         };
 
         double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2)+ pow(errorVect(5, 0), 2));
-        ofstream errorVisual;
-        errorVisual.open("errorvisual.csv", std::ios::out | std::ios::app);
-        errorVisual << u1;
-        errorVisual << ",";
-        errorVisual << v1;
-        errorVisual << ",";
-        errorVisual << u2;
-        errorVisual << ",";
-        errorVisual << v2;
-        errorVisual << ",";
-        errorVisual << u3;
-        errorVisual << ",";
-        errorVisual << v3;
-        errorVisual << ",";
-        errorVisual << u4;
-        errorVisual << ",";
-        errorVisual << v4;
-        errorVisual << ",";
-        errorVisual << errorVect(0,0);
-        errorVisual << ",";
-        errorVisual << errorVect(1,0);
-        errorVisual << ",";
-        errorVisual << errorVect(2,0);
-        errorVisual << ",";
-        errorVisual << errorVect(3,0);
-        errorVisual << ",";
-        errorVisual << errorVect(4,0);
-        errorVisual << ",";
-        errorVisual << errorVect(5,0);
-        errorVisual << ",";
-        errorVisual << errorVect(6, 0);
-        errorVisual << ",";
-        errorVisual << errorVect(7, 0);
-        errorVisual << ",";
-        errorVisual << normErr;
-        errorVisual << ",\n";
+        //ofstream errorVisual;
+        //errorVisual.open("errorvisual.csv", std::ios::out | std::ios::app);
+        //errorVisual << u1;
+        //errorVisual << ",";
+        //errorVisual << v1;
+        //errorVisual << ",";
+        //errorVisual << u2;
+        //errorVisual << ",";
+        //errorVisual << v2;
+        //errorVisual << ",";
+        //errorVisual << u3;
+        //errorVisual << ",";
+        //errorVisual << v3;
+        //errorVisual << ",";
+        //errorVisual << u4;
+        //errorVisual << ",";
+        //errorVisual << v4;
+        //errorVisual << ",";
+        //errorVisual << errorVect(0,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(1,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(2,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(3,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(4,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(5,0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(6, 0);
+        //errorVisual << ",";
+        //errorVisual << errorVect(7, 0);
+        //errorVisual << ",";
+        //errorVisual << normErr;
+        //errorVisual << ",\n";
 
-        errorVisual.close();
+        //errorVisual.close();
 
         if (normErr <= 50) {
             // Add zero set here

@@ -6,4 +6,6 @@ C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(527,22): war
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(528,22): warning C4244: 'initializing': conversion from 'double' to 'INT32', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(529,22): warning C4244: 'initializing': conversion from 'double' to 'INT32', possible loss of data
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(530,22): warning C4244: 'initializing': conversion from 'double' to 'INT32', possible loss of data
+  picfunc.cpp
+  Generating Code...
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe

@@ -51,8 +51,8 @@ typedef long long int (*Func_ServoLoadTraj)(byte addr, byte mode, long pos, long
 typedef long long int (*Func_ServoSetGain)(byte addr, short int kp, short int kd, short int ki,
 										   short int il, byte ol, byte cl, short int el,
 										   byte sr, byte dc);
-typedef long long int (*Func_ServoGetPos)(byte addr);
-typedef long long int (*Func_ServoGetVel)(byte addr);
+typedef long int (*Func_ServoGetPos)(byte addr);
+typedef short int (*Func_ServoGetVel)(byte addr);
 
 
 extern "C" Func_NmcInit LoadNmcInit(HINSTANCE hModule);
