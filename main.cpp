@@ -259,8 +259,8 @@ int main()
         unsigned char addrMotor4 = 3; //module address
         unsigned char addrMotor5 = 2; //module address
         unsigned char addrMotor6 = 1; //module address
-        long pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
-        short int vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
+        INT64 pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
+        INT64 vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
         unsigned char stat_items; //specify which data should be returned
 
         stat_items = SEND_POS | SEND_VEL; //specify both position and velocity
@@ -427,7 +427,26 @@ int main()
         };
 
         double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2)+ pow(errorVect(5, 0), 2));
-        if (normErr <= 15) {
+        ofstream errorVisual;
+        errorVisual.open("errorvisual.csv", std::ios::out | std::ios::app);
+        errorVisual << errorVect(0,0);
+        errorVisual << ",";
+        errorVisual << errorVect(1,0);
+        errorVisual << ",";
+        errorVisual << errorVect(2,0);
+        errorVisual << ",";
+        errorVisual << errorVect(3,0);
+        errorVisual << ",";
+        errorVisual << errorVect(4,0);
+        errorVisual << ",";
+        errorVisual << errorVect(5,0);
+        errorVisual << ",";
+        errorVisual << normErr;
+        errorVisual << ",\n";
+
+        errorVisual.close();
+
+        if (normErr <= 20) {
             // Add zero set here
             ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
@@ -478,7 +497,7 @@ int main()
         }
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 0.3 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 0.15 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
@@ -489,6 +508,12 @@ int main()
         int speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
         int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
         int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
+
+        //speed1 = speed1 * -1;
+        speed2 = speed2 * -1;
+        speed3 = speed3 * -1;
+        speed4 = speed4 * -1;
+        speed6 = speed6 * -1;
 
         //int speed1 = -50000;
         //int speed2 = 0;
