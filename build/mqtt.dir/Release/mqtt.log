@@ -1,21 +1,21 @@
 ﻿  main.cpp
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(78,25): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(247,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(248,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(251,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(252,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(255,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(256,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(351,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(352,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(353,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(354,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(355,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(356,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(239,44): warning C4101: 'pos6': unreferenced local variable
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,49): warning C4101: 'vel6': unreferenced local variable
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(239,32): warning C4101: 'pos4': unreferenced local variable
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,43): warning C4101: 'vel5': unreferenced local variable
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,37): warning C4101: 'vel4': unreferenced local variable
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(239,38): warning C4101: 'pos5': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(248,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(249,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(252,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(253,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(256,27): warning C4244: '=': conversion from '__int64' to 'long', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(257,27): warning C4244: '=': conversion from '__int64' to 'short', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(363,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(364,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(365,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(366,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(367,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(368,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,44): warning C4101: 'pos6': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(241,49): warning C4101: 'vel6': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,32): warning C4101: 'pos4': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(241,43): warning C4101: 'vel5': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(241,37): warning C4101: 'vel4': unreferenced local variable
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(240,38): warning C4101: 'pos5': unreferenced local variable
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe

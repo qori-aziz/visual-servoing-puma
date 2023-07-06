@@ -76,6 +76,7 @@ int main()
     Func_ServoGetVel ServoGetVel = LoadServoGetVel(hModule);
 
     int numberOfModules = NmcInit("COM1:", 19200);
+    //int numberOfModules = NmcInit("COM3:", 19200);
     printf("Number of Modules detected: %d\n", numberOfModules);
     if (numberOfModules == 0)
     {
@@ -273,6 +274,17 @@ int main()
 
         position.close();
 
+        ofstream realSpeed;
+        realSpeed.open("realSpeed.csv", std::ios::out | std::ios::app);
+        realSpeed << vel1;
+        realSpeed << ",";
+        realSpeed << vel2;
+        realSpeed << ",";
+        realSpeed << vel3;
+        realSpeed << ",\n";
+
+        realSpeed.close();
+
         // Calculate Jacobian Robot matrix
         Eigen::Matrix<double, 6, 6> jacobiRobot{
             {(79 * cos(q2) * cos(q3) * sin(q1)) / 10 - (1016 * cos(q2) * sin(q1)) / 5 - (127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 - (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2 - (79 * sin(q1) * sin(q2) * sin(q3)) / 10 - (627 * cos(q1)) / 5 - (1016 * cos(q2) * sin(q1) * sin(q3)) / 5 - (1016 * cos(q3) * sin(q1) * sin(q2)) / 5, cos(q1) * ((1016 * cos(q2) * cos(q3)) / 5 - (1016 * sin(q2)) / 5 + (79 * cos(q2) * sin(q3)) / 10 + (79 * cos(q3) * sin(q2)) / 10 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2), cos(q1)* ((1016 * cos(q2) * cos(q3)) / 5 + (79 * cos(q2) * sin(q3)) / 10 + (79 * cos(q3) * sin(q2)) / 10 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) ,(cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2)) * ((1016 * cos(q2) * cos(q3)) / 5 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - (cos(q2) * cos(q3) - sin(q2) * sin(q3)) * ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2 + (1016 * cos(q2) * sin(q1) * sin(q3)) / 5 + (1016 * cos(q3) * sin(q1) * sin(q2)) / 5) , (cos(q1) * cos(q4) + sin(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1))) * ((127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - sin(q4) * ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2) * (cos(q2) * sin(q3) + cos(q3) * sin(q2)) ,(sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1))) + cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) * ((127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2) * (cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3)) - cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) },
@@ -355,6 +367,9 @@ int main()
         int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
         int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
+     /*   int speed1 = -50000;
+        int speed2 = 0;
+        int speed3 = 0;*/
         // write to csv
         ofstream myfile;
         myfile.open("speed.csv", std::ios::out | std::ios::app);
@@ -372,65 +387,34 @@ int main()
         myfile << ",\n";
       
         myfile.close();
+
+
   
         // Be careful when addressing. Address 1 is farthest from the PC
         // Seems that the desired speed vs real speed is reversed
-        //if (speed1 > 0) 
             ServoLoadTraj(3, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
+                0, // pos = 2000
                 speed1,    // vel = 100,000
                 1000, // acc = 100
                 0     // pwm = 0
             );
         //}
-        //else if (speed1 < 0) {
-        //    ServoLoadTraj(3, // vertical
-        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-        //        5000, // pos = 2000
-        //        speed1,    // vel = 100,000
-        //        1000, // acc = 100
-        //        0     // pwm = 0
-        //    );
-        //}
-
-        //if (speed2 > 0) {
             ServoLoadTraj(2, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
+                0, // pos = 2000
                 speed2,    // vel = 100,000
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        //}
-        //else if (speed2 < 0) {
-        //    ServoLoadTraj(2, // vertical
-        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-        //        5000, // pos = 2000
-        //        speed2,    // vel = 100,000
-        //        1000, // acc = 100
-        //        0     // pwm = 0
-        //    );
-        //}
-		
-        //if (speed3 > 0) {
+       
             ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
+                0, // pos = 2000
                 speed3,    // vel = 100,000
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        //}
-        //else if (speed3 < 0) {
-        //    ServoLoadTraj(1, // vertical
-        //        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW | REVERSE,
-        //        5000, // pos = 2000
-        //        speed3,    // vel = 100,000
-        //        1000, // acc = 100
-        //        0     // pwm = 0
-        //    );
-        //}
   
 
         //printf("errver:%d\n", errVer);
