@@ -99,7 +99,7 @@ int main()
         printf("OK\n");
     }
 
-    for (int i = 1; i <= 3; i++)
+    for (int i = 1; i <= 6; i++) //try 6 motor
     {
         ServoStopMotor(i, AMP_ENABLE | MOTOR_OFF);   // enable amp
         ServoStopMotor(i, AMP_ENABLE | STOP_ABRUPT); // stop at current pos.
@@ -226,17 +226,39 @@ int main()
                 1000,  // acc = 100
                 0      // pwm = 0
             );
+            ServoLoadTraj(4, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(5, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(6, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
             cout << "depth zero" << endl;
             continue;
         }
 
         // get current position
-        unsigned char addrMotor1 = 3; //module address
-        unsigned char addrMotor2 = 2; //module address
-        unsigned char addrMotor3 = 1; //module address
-        //unsigned char addr4 = 4; //module address
-        //unsigned char addr5 = 5; //module address
-        //unsigned char addr6 = 6; //module address
+        unsigned char addrMotor1 = 6; //module address
+        unsigned char addrMotor2 = 5; //module address
+        unsigned char addrMotor3 = 4; //module address
+        unsigned char addrMotor4 = 3; //module address
+        unsigned char addrMotor5 = 2; //module address
+        unsigned char addrMotor6 = 1; //module address
         long pos1, pos2, pos3, pos4, pos5, pos6; //motor position in encoder counts
         short int vel1, vel2, vel3, vel4, vel5, vel6; //motor vel. In encoder counts/servo tick
         unsigned char stat_items; //specify which data should be returned
@@ -255,15 +277,29 @@ int main()
         NmcReadStatus(addrMotor3, stat_items); //Read data from controllers
         pos3 = ServoGetPos(addrMotor3); //retrieve the position and velocity data
         vel3 = ServoGetVel(addrMotor3); //from the local internal data structure
+
+        NmcReadStatus(addrMotor4, stat_items); //Read data from controllers
+        pos4 = ServoGetPos(addrMotor4); //retrieve the position and velocity data
+        vel4 = ServoGetVel(addrMotor4); //from the local internal data structure
+
+
+        NmcReadStatus(addrMotor5, stat_items); //Read data from controllers
+        pos5 = ServoGetPos(addrMotor5); //retrieve the position and velocity data
+        vel5 = ServoGetVel(addrMotor5); //from the local internal data structure
+
+        NmcReadStatus(addrMotor6, stat_items); //Read data from controllers
+        pos6 = ServoGetPos(addrMotor6); //retrieve the position and velocity data
+        vel6 = ServoGetVel(addrMotor6); //from the local internal data structure
+
      
 
         // Calulate new q1 to q6
         q1 = q1_ref + (pos1 / decoder1 * 6.2832);
         q2 = q2_ref + (pos2 / decoder2 * 6.2832);
         q3 = q3_ref + (pos3 / decoder3 * 6.2832);
-        q4 = q4_ref ;
-        q5 = q5_ref ;
-        q6 = q6_ref ;
+        q4 = q4_ref + (pos4 / decoder3 * 6.2832);;
+        q5 = q5_ref + (pos5 / decoder3 * 6.2832);;
+        q6 = q6_ref + (pos6 / decoder3 * 6.2832);;
 
         // write to csv
         ofstream position;
@@ -273,6 +309,12 @@ int main()
         position << pos2;
         position << ",";
         position << pos3;
+        position << ",";
+        position << pos4;
+        position << ",";
+        position << pos5;
+        position << ",";
+        position << pos6;
         position << ",\n";
 
         position.close();
@@ -284,6 +326,12 @@ int main()
         realSpeed << vel2;
         realSpeed << ",";
         realSpeed << vel3;
+        realSpeed << ",";
+        realSpeed << vel4;
+        realSpeed << ",";
+        realSpeed << vel5;
+        realSpeed << ",";
+        realSpeed << vel6;
         realSpeed << ",\n";
 
         realSpeed.close();
@@ -315,7 +363,7 @@ int main()
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
-            ServoLoadTraj(3, // vertical
+            ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
                 0,    // vel = 100,000
@@ -330,7 +378,29 @@ int main()
                 0      // pwm = 0
             );
 
-            ServoLoadTraj(1, // vertical
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+            ServoLoadTraj(4, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(5, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(6, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 5000, // pos = 2000
                 0,     // vel = -100,000
@@ -356,6 +426,56 @@ int main()
             {v4_ref - v4},
         };
 
+        double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2)+ pow(errorVect(5, 0), 2));
+        if (normErr <= 15) {
+            // Add zero set here
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+            ServoLoadTraj(4, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(5, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(6, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+            cout << "Tracking done" << endl;
+            continue;
+        }
 
         // Calculate joint speed
         Eigen::Matrix<double, 6, 1>jointSpeed = 0.3 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
@@ -382,11 +502,11 @@ int main()
         myfile << ",";
         myfile << speed3;
         myfile << ",";
-        //myfile << speed4;
-        //myfile << ",";
-        //myfile << speed5;
-        //myfile << ",";
-        //myfile << speed6;
+        myfile << speed4;
+        myfile << ",";
+        myfile << speed5;
+        myfile << ",";
+        myfile << speed6;
         myfile << ",\n";
       
         myfile.close();
@@ -395,15 +515,14 @@ int main()
   
         // Be careful when addressing. Address 1 is farthest from the PC
         // Seems that the desired speed vs real speed is reversed
-            ServoLoadTraj(3, // vertical
+            ServoLoadTraj(6, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 0, // pos = 2000
                 speed1,    // vel = 100,000
                 1000, // acc = 100
                 0     // pwm = 0
             );
-        //}
-            ServoLoadTraj(2, // vertical
+            ServoLoadTraj(5, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 0, // pos = 2000
                 speed2,    // vel = 100,000
@@ -411,10 +530,32 @@ int main()
                 0     // pwm = 0
             );
        
-            ServoLoadTraj(1, // vertical
+            ServoLoadTraj(4, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
                 0, // pos = 2000
                 speed3,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                0, // pos = 2000
+                speed4,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                0, // pos = 2000
+                speed5,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                0, // pos = 2000
+                speed6,    // vel = 100,000
                 1000, // acc = 100
                 0     // pwm = 0
             );
