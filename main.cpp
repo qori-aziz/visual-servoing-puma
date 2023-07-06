@@ -261,6 +261,9 @@ int main()
         q1 = q1_ref + (pos1 / decoder1 * 6.2832);
         q2 = q2_ref + (pos2 / decoder2 * 6.2832);
         q3 = q3_ref + (pos3 / decoder3 * 6.2832);
+        q4 = q4_ref ;
+        q5 = q5_ref ;
+        q6 = q6_ref ;
 
         // write to csv
         ofstream position;
