@@ -24,10 +24,10 @@ const double v3_ref = 25;
 const double u4_ref = 257;
 const double v4_ref = 193;
 const double q1_ref = 0;
-const double q2_ref = 0;
-const double q3_ref = 0;
-const double q4_ref = M_PI;
-const double q5_ref = -M_PI / 2;
+const double q2_ref = -M_PI/2;
+const double q3_ref = M_PI/2;
+const double q4_ref = 0;
+const double q5_ref = M_PI / 2;
 const double q6_ref = 0;
 const double decoder1 = 50000;
 const double decoder2 = 60000;
@@ -45,8 +45,8 @@ int main()
     double q1 = 0;
     double q2 = 0;
     double q3 = 0;
-    double q4 = M_PI;
-    double q5 = -M_PI/2;
+    double q4 = 0;
+    double q5 = 0;
     double q6 = 0;
     double u1 = 0;
     double v1 = 0;
@@ -265,11 +265,11 @@ int main()
         // write to csv
         ofstream position;
         position.open("realPos.csv", std::ios::out | std::ios::app);
-        position << q1;
+        position << pos1;
         position << ",";
-        position << q2;
+        position << pos2;
         position << ",";
-        position << q3;
+        position << pos3;
         position << ",\n";
 
         position.close();
@@ -367,9 +367,9 @@ int main()
         int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
         int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
-     /*   int speed1 = -50000;
-        int speed2 = 0;
-        int speed3 = 0;*/
+        //int speed1 = -50000;
+        //int speed2 = 0;
+        //int speed3 = 0;
         // write to csv
         ofstream myfile;
         myfile.open("speed.csv", std::ios::out | std::ios::app);
@@ -379,11 +379,11 @@ int main()
         myfile << ",";
         myfile << speed3;
         myfile << ",";
-        myfile << speed4;
-        myfile << ",";
-        myfile << speed5;
-        myfile << ",";
-        myfile << speed6;
+        //myfile << speed4;
+        //myfile << ",";
+        //myfile << speed5;
+        //myfile << ",";
+        //myfile << speed6;
         myfile << ",\n";
       
         myfile.close();
