@@ -457,12 +457,16 @@ int main()
         errorVisual << ",";
         errorVisual << errorVect(5,0);
         errorVisual << ",";
+        errorVisual << errorVect(6, 0);
+        errorVisual << ",";
+        errorVisual << errorVect(7, 0);
+        errorVisual << ",";
         errorVisual << normErr;
         errorVisual << ",\n";
 
         errorVisual.close();
 
-        if (normErr <= 20) {
+        if (normErr <= 50) {
             // Add zero set here
             ServoLoadTraj(1, // vertical
                 LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
@@ -513,23 +517,24 @@ int main()
         }
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 0.15 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 0.05 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
         // Convert from rad/s to decoder/tick time
-        int speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
-        int speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
-        int speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
-        int speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
-        int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
-        int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
+        INT32 speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
+        INT32 speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
+        INT32 speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
+        INT32 speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
+        INT32 speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
+        INT32 speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
-        //speed1 = speed1 * -1;
-        speed2 = speed2 * -1;
-        speed3 = speed3 * -1;
-        speed4 = speed4 * -1;
-        speed6 = speed6 * -1;
+        speed1 = speed1 * -1;
+        //speed2 = speed2 * -1;
+        //speed3 = speed3 * -1;
+        //speed4 = speed4 * -1;
+        speed5 = speed5 * -1;
+        //speed6 = speed6 * -1;
 
         //int speed1 = -50000;
         //int speed2 = 0;
