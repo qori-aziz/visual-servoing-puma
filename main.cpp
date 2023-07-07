@@ -233,6 +233,54 @@ int main()
                 mockData = messagestring;
             }
         }
+        else {
+            ServoLoadTraj(1, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(2, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(3, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+            ServoLoadTraj(4, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,    // vel = 100,000
+                1000, // acc = 100
+                0     // pwm = 0
+            );
+            ServoLoadTraj(5, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+
+            ServoLoadTraj(6, // vertical
+                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+                5000, // pos = 2000
+                0,     // vel = -100,000
+                1000,  // acc = 100
+                0      // pwm = 0
+            );
+            //cout << "depth zero" << endl;
+            continue;
+        }
 
         vector<string> strings;
 
