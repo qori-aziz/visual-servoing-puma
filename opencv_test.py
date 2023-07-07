@@ -88,9 +88,9 @@ try:
             print(f"predicted quadratic response:{y_pred_quadratic} \n")
             depth = y_pred_quadratic[0]
             # data = (width,length)
-            # writer.writerow(data) 
-        data = f'{depth:.2f},{u_lefttop},{v_lefttop},{u_rightdown},{v_rightdown}'
-        client.publish("data", data)
+            # writer.writerow(data)
+            data = f'{depth:.2f},{u_lefttop},{v_lefttop},{u_rightdown},{v_rightdown}'
+            client.publish("data", data)        
         t1 = time.time()
         one_frame_time = 1E3 * (t1 - t0)
         print(f'Total 1 frame time: ({one_frame_time:.1f}ms)')
