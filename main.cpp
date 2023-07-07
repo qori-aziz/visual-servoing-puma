@@ -32,7 +32,7 @@ const double q1_ref = 0;
 const double q2_ref = -M_PI/2;
 const double q3_ref = M_PI/2;
 const double q4_ref = 0;
-const double q5_ref = M_PI / 2;
+const double q5_ref = -M_PI / 2;
 const double q6_ref = 0;
 const double decoder1 = 50000;
 const double decoder2 = 60000;
@@ -194,11 +194,16 @@ int main()
     std::string id = "consumer";
     // construct a client using the ip and id, specifying usage of mqtt v5.
     mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
+    auto connOpts = mqtt::connect_options_builder()
+        .mqtt_version(MQTTVERSION_5)
+        .automatic_reconnect(seconds(2), seconds(30))
+        .clean_session(true)
+        .finalize();
      // use the connect method of the client to establish a connection to the broker.
     client.connect();
     // std::printf("tes4");
     // in order to receive messages from the broker, specify a topic to subscribe to.
-    client.subscribe("data");
+    client.subscribe("data", 0);
     //client.subscribe("errhor");
     std::printf("tes5");                      
     // begin the client's message processing loop, filling a queue with messages.
@@ -216,6 +221,50 @@ int main()
         auto start = high_resolution_clock::now();
         //// Construct a message pointer to hold an incoming message.
         mqtt::const_message_ptr messagePointer;
+        ServoLoadTraj(1, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,    // vel = 100,000
+            1000, // acc = 100
+            0     // pwm = 0
+        );
+        ServoLoadTraj(2, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,     // vel = -100,000
+            1000,  // acc = 100
+            0      // pwm = 0
+        );
+
+        ServoLoadTraj(3, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,     // vel = -100,000
+            1000,  // acc = 100
+            0      // pwm = 0
+        );
+        ServoLoadTraj(4, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,    // vel = 100,000
+            1000, // acc = 100
+            0     // pwm = 0
+        );
+        ServoLoadTraj(5, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,     // vel = -100,000
+            1000,  // acc = 100
+            0      // pwm = 0
+        );
+
+        ServoLoadTraj(6, // vertical
+            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+            5000, // pos = 2000
+            0,     // vel = -100,000
+            1000,  // acc = 100
+            0      // pwm = 0
+        );
         auto msg = client.consume_message();
         if (msg) {
             if (msg->get_topic() == "data") {
