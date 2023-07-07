@@ -469,11 +469,11 @@ int main()
      
 
         // Calulate new q1 to q6
-        q1 = (q1_ref + (pos1 / decoder1 * 6.2832) * -1);
+        q1 = (q1_ref + (pos1 / decoder1 * 6.2832) * 1);
         q2 = (q2_ref + (pos2 / decoder2 * 6.2832) * -1);
         q3 = (q3_ref + (pos3 / decoder3 * 6.2832) * -1);
         q4 = (q4_ref + (pos4 / decoder3 * 6.2832));
-        q5 = (q5_ref + (pos5 / decoder3 * 6.2832)*-1 );
+        q5 = (q5_ref + (pos5 / decoder3 * 6.2832)*1 );
         q6 = q6_ref + (pos6 / decoder3 * 6.2832);
 
         //// write to csv
@@ -713,7 +713,7 @@ int main()
         speed2 = speed2 * -1;
         speed3 = speed3 * -1;
         //speed4 = speed4 * -1;
-        speed5 = speed5 * -1;
+        speed5 = speed5;
         //speed6 = speed6 * -1;
 
         //int speed1 = -50000;
