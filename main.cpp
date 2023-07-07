@@ -200,13 +200,11 @@ int main()
     // in order to receive messages from the broker, specify a topic to subscribe to.
     client.subscribe("data");
     //client.subscribe("errhor");
-    std::printf("tes5");
+    std::printf("tes5");                      
     // begin the client's message processing loop, filling a queue with messages.
-    client.start_consuming();
+    //client.start_consuming();
 
     bool running = true;
-    int errVer = 0;
-    int errHor = 0;
     ofstream AllDataCSV;
     AllDataCSV.open("alldata.csv");
     AllDataCSV << "u1,v1,u2,v2,u3,v3,u4,v4,pos1,pos2,pos3,pos4,pos5,pos6,vel1,vel2,vel3,vel4,vel5,vel6,err1,err2,err3,err4,err5,err6,err7,err8,speed1,speed2,speed3,speed4,speed5,speed6,cmdspeed1,cmdspeed2,cmdspeed3,cmdspeed4,cmdspeed5,cmdspeed6,time";
@@ -218,19 +216,10 @@ int main()
         auto start = high_resolution_clock::now();
         //// Construct a message pointer to hold an incoming message.
         mqtt::const_message_ptr messagePointer;
-
-        //// Try to consume a message, passing messagePointer by reference.
-        //// If a message is consumed, the function will return `true`,
-        //// allowing control to enter the if-statement body.
-        if (client.try_consume_message(&messagePointer))
-        {
-            // construct a string from the message payload.
-            std::string topicstring = messagePointer->get_topic();
-            std::string messagestring = messagePointer->get_payload_str();
-            if (topicstring == "data")
-            {
-                //std::cout << messagestring << std::endl;
-                mockData = messagestring;
+        auto msg = client.consume_message();
+        if (msg) {
+            if (msg->get_topic() == "data") {
+                mockData = msg->to_string();
             }
         }
         else {
@@ -281,6 +270,22 @@ int main()
             //cout << "depth zero" << endl;
             continue;
         }
+
+        //// Try to consume a message, passing messagePointer by reference.
+        //// If a message is consumed, the function will return `true`,
+        //// allowing control to enter the if-statement body.        
+        //if (client.try_consume_message(&messagePointer))
+        //{
+        //    // construct a string from the message payload.
+        //    std::string topicstring = messagePointer->get_topic();
+        //    std::string messagestring = messagePointer->get_payload_str();
+        //    if (topicstring == "data")
+        //    {
+        //        //std::cout << messagestring << std::endl;
+        //        mockData = messagestring;
+        //    }
+        //}
+  
 
         vector<string> strings;
 
@@ -635,7 +640,15 @@ int main()
         }
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 0.5 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 6>proportionalGain{
+            {1.1,0,0,0,0,0},
+            {0,0.5,0,0,0,0},
+            {0,0,0.5,0,0,0},
+            {0,0,0,0.5,0,0},
+            {0,0,0,0,0.5,0},
+            {0,0,0,0,0,0.5},
+        };
+        Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
@@ -647,7 +660,7 @@ int main()
         int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 ;
         int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 ;
 
-        speed1 = speed1 * -1;
+        //speed1 = speed1 * -1;
         speed2 = speed2 * -1;
         speed3 = speed3 * -1;
         //speed4 = speed4 * -1;
@@ -730,9 +743,6 @@ int main()
 
         // std::cout << "errver:" + errVer << std::endl;
         // std::cout << "errHor:" + errHor << std::endl;
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<milliseconds>(stop - start);
-        std::cout << "duration: " << duration.count()<< std::endl;
         //ofstream AllDataCSV;
         //AllDataCSV.open("alldata.csv");
         AllDataCSV << u1;
@@ -815,10 +825,11 @@ int main()
         AllDataCSV << ",";
         AllDataCSV << speed6;
         AllDataCSV << ",";
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<milliseconds>(stop - start);
+        std::cout << "duration: " << duration.count() << std::endl;
         AllDataCSV << duration.count();
         AllDataCSV << ",\n";
-
-
     }
     std::printf("done");
     return EXIT_SUCCESS;
