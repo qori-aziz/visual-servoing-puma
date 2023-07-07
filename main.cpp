@@ -194,11 +194,11 @@ int main()
     std::string id = "consumer";
     // construct a client using the ip and id, specifying usage of mqtt v5.
     mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
-    auto connOpts = mqtt::connect_options_builder()
+ /*   auto connOpts = mqtt::connect_options_builder()
         .mqtt_version(MQTTVERSION_5)
         .automatic_reconnect(seconds(2), seconds(30))
         .clean_session(true)
-        .finalize();
+        .finalize();*/
      // use the connect method of the client to establish a connection to the broker.
     client.connect();
     // std::printf("tes4");
@@ -221,50 +221,11 @@ int main()
         auto start = high_resolution_clock::now();
         //// Construct a message pointer to hold an incoming message.
         mqtt::const_message_ptr messagePointer;
-        ServoLoadTraj(1, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,    // vel = 100,000
-            1000, // acc = 100
-            0     // pwm = 0
-        );
-        ServoLoadTraj(2, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,     // vel = -100,000
-            1000,  // acc = 100
-            0      // pwm = 0
-        );
+        //for (int i = 1; i <= 6; i++) //try 6 motor
+        //{
+        //    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+        //}
 
-        ServoLoadTraj(3, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,     // vel = -100,000
-            1000,  // acc = 100
-            0      // pwm = 0
-        );
-        ServoLoadTraj(4, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,    // vel = 100,000
-            1000, // acc = 100
-            0     // pwm = 0
-        );
-        ServoLoadTraj(5, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,     // vel = -100,000
-            1000,  // acc = 100
-            0      // pwm = 0
-        );
-
-        ServoLoadTraj(6, // vertical
-            LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-            5000, // pos = 2000
-            0,     // vel = -100,000
-            1000,  // acc = 100
-            0      // pwm = 0
-        );
         auto msg = client.consume_message();
         if (msg) {
             if (msg->get_topic() == "data") {
@@ -272,50 +233,11 @@ int main()
             }
         }
         else {
-            ServoLoadTraj(1, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(2, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
 
-            ServoLoadTraj(3, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-            ServoLoadTraj(4, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(5, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-
-            ServoLoadTraj(6, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
             //cout << "depth zero" << endl;
             continue;
         }
@@ -378,51 +300,10 @@ int main()
         }
     
         if (Z == 0) {
-            // Add zero set here
-            ServoLoadTraj(1, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(2, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-
-            ServoLoadTraj(3, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-            ServoLoadTraj(4, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(5, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-
-            ServoLoadTraj(6, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
             //cout << "depth zero" << endl;
             continue;
         }
@@ -535,50 +416,11 @@ int main()
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
-            ServoLoadTraj(1, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(2, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
 
-            ServoLoadTraj(3, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-            ServoLoadTraj(4, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(5, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-
-            ServoLoadTraj(6, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
             cout << "jacobiRobot not invertible" << endl;
             continue;
         }
@@ -640,50 +482,11 @@ int main()
 
         if (normErr <= 50) {
             // Add zero set here
-            ServoLoadTraj(1, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(2, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
 
-            ServoLoadTraj(3, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-            ServoLoadTraj(4, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,    // vel = 100,000
-                1000, // acc = 100
-                0     // pwm = 0
-            );
-            ServoLoadTraj(5, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
-
-            ServoLoadTraj(6, // vertical
-                LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-                5000, // pos = 2000
-                0,     // vel = -100,000
-                1000,  // acc = 100
-                0      // pwm = 0
-            );
             cout << "Tracking done" << endl;
             continue;
         }
