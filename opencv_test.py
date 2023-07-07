@@ -22,6 +22,8 @@ model = d.initialization()
 Id = "producerPy"
 Ip = "localhost"
 client = mqtt.Client(Id)
+# client.max_queued_messages_set(1)
+# client.max_inflight_messages_set(1)
 client.connect(Ip, 1883, 60)
 f = open('errdata.csv', 'w')
 # writer = csv.writer(f)
