@@ -75,10 +75,10 @@ try:
         u_rightdown = 0
         v_rightdown = 0
         if len(na)>0:
-            u_lefttop = na[0][0]
-            v_lefttop = na[0][1]
-            u_rightdown = na[0][2]
-            v_rightdown = na[0][3]
+            u_lefttop = int(na[0][0])
+            v_lefttop = int(na[0][1])
+            u_rightdown = int(na[0][2])
+            v_rightdown = int(na[0][3])
             width = abs(na[0][0] - na[0][2])
             # length = abs(na[0][1] - na[0][3])
             dataDepth = np.array([width])
@@ -88,10 +88,10 @@ try:
             y_pred_quadratic = modelQuadratic.predict(x_.reshape(1, -1))
             print(f"predicted linear response:{y_pred_linear} \n")
             print(f"predicted quadratic response:{y_pred_quadratic} \n")
-            depth = y_pred_quadratic[0]
+            depth = int(y_pred_quadratic[0])
             # data = (width,length)
             # writer.writerow(data)
-            data = f'{depth:.2f},{u_lefttop},{v_lefttop},{u_rightdown},{v_rightdown}'
+            data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
             client.publish("data", data)        
         t1 = time.time()
         one_frame_time = 1E3 * (t1 - t0)
