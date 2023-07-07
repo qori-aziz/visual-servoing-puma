@@ -11,6 +11,11 @@
 #include <string>
 #include <chrono>
 #include <fstream>
+#include <iostream>
+#include <cstdlib>
+#include <signal.h>
+
+
 using namespace std;
 using namespace std::chrono;
 
@@ -37,10 +42,72 @@ const double decoder5 = 42000;
 const double decoder6 = 25000;
 const double servoticktime = 0.000512;
 
+void signal_callback_handler(int signum) {
+    cout << "Caught signal " << signum << endl;
+    // Terminate program
+    exit(0);
+}
+
+/*
+void atexit_handler_1(HINSTANCE hModule, Func_ServoLoadTraj ServoLoadTraj, Func_NmcShutdown NmcShutdown, ofstream AllDataCSV)
+{
+
+    AllDataCSV.close();
+    ServoLoadTraj(1, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,    // vel = 100,000
+        1000, // acc = 100
+        0     // pwm = 0
+    );
+    ServoLoadTraj(2, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,     // vel = -100,000
+        1000,  // acc = 100
+        0      // pwm = 0
+    );
+
+    ServoLoadTraj(3, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,     // vel = -100,000
+        1000,  // acc = 100
+        0      // pwm = 0
+    );
+    ServoLoadTraj(4, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,    // vel = 100,000
+        1000, // acc = 100
+        0     // pwm = 0
+    );
+    ServoLoadTraj(5, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,     // vel = -100,000
+        1000,  // acc = 100
+        0      // pwm = 0
+    );
+
+    ServoLoadTraj(6, // vertical
+        LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
+        5000, // pos = 2000
+        0,     // vel = -100,000
+        1000,  // acc = 100
+        0      // pwm = 0
+    );
+
+    NmcShutdown();
+    FreeLibrary(hModule);
+
+    std::cout << "at exit #1\n";
+}
+*/
 
 // With the library header files included, continue by defining a main function.
 int main()
-{
+{   
     // Initialize start angle position
     double q1 = 0;
     double q2 = 0;
@@ -58,22 +125,23 @@ int main()
     double v4 = 0;
     double Z = 50;
 
-    // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
-    string mockData = "0,0,0,0,0";
-
     HINSTANCE hModule = LoadLibraryA("NMCLIB04v64.dll");
     Func_NmcInit NmcInit = LoadNmcInit(hModule);
     Func_NmcGetModType NmcGetModType = LoadNmcGetModType(hModule);
     Func_NmcNoOp NmcNoOp = LoadNmcNoOp(hModule);
     Func_NmcGetStat NmcGetStat = LoadNmcGetStat(hModule);
     Func_NmcShutdown NmcShutdown = LoadNmcShutdown(hModule);
-    Func_NmcReadStatus NmcReadStatus =  LoadNmcReadStatus(hModule);
+    Func_NmcReadStatus NmcReadStatus = LoadNmcReadStatus(hModule);
     Func_ServoResetPos ServoResetPos = LoadServoResetPos(hModule);
     Func_ServoLoadTraj ServoLoadTraj = LoadServoLoadTraj(hModule);
     Func_ServoStopMotor ServoStopMotor = LoadServoStopMotor(hModule);
     Func_ServoSetGain ServoSetGain = LoadServoSetGain(hModule);
     Func_ServoGetPos ServoGetPos = LoadServoGetPos(hModule);
     Func_ServoGetVel ServoGetVel = LoadServoGetVel(hModule);
+
+
+    // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
+    string mockData = "0,0,0,0,0";
 
     int numberOfModules = NmcInit("COM1:", 19200);
     //int numberOfModules = NmcInit("COM3:", 19200);
@@ -139,6 +207,12 @@ int main()
     bool running = true;
     int errVer = 0;
     int errHor = 0;
+    ofstream AllDataCSV;
+    AllDataCSV.open("alldata.csv");
+    AllDataCSV << "u1,v1,u2,v2,u3,v3,u4,v4,pos1,pos2,pos3,pos4,pos5,pos6,vel1,vel2,vel3,vel4,vel5,vel6,err1,err2,err3,err4,err5,err6,err7,err8,speed1,speed2,speed3,speed4,speed5,speed6,cmdspeed1,cmdspeed2,cmdspeed3,cmdspeed4,cmdspeed5,cmdspeed6,time";
+    AllDataCSV << ",\n";
+
+    signal(SIGINT, signal_callback_handler);
     while (running)
     {
         auto start = high_resolution_clock::now();
@@ -200,8 +274,7 @@ int main()
             }
             strings.push_back(s);
         }
-
-
+    
         if (Z == 0) {
             // Add zero set here
             ServoLoadTraj(1, // vertical
@@ -301,40 +374,40 @@ int main()
         q5 = (q5_ref + (pos5 / decoder3 * 6.2832)*-1 );
         q6 = q6_ref + (pos6 / decoder3 * 6.2832);
 
-        // write to csv
-        ofstream position;
-        position.open("realPos.csv", std::ios::out | std::ios::app);
-        position << pos1;
-        position << ",";
-        position << pos2;
-        position << ",";
-        position << pos3;
-        position << ",";
-        position << pos4;
-        position << ",";
-        position << pos5;
-        position << ",";
-        position << pos6;
-        position << ",\n";
+        //// write to csv
+        //ofstream position;
+        //position.open("realPos.csv", std::ios::out | std::ios::app);
+        //position << pos1;
+        //position << ",";
+        //position << pos2;
+        //position << ",";
+        //position << pos3;
+        //position << ",";
+        //position << pos4;
+        //position << ",";
+        //position << pos5;
+        //position << ",";
+        //position << pos6;
+        //position << ",\n";
 
-        position.close();
+        //position.close();
 
-        ofstream realSpeed;
-        realSpeed.open("realSpeed.csv", std::ios::out | std::ios::app);
-        realSpeed << vel1;
-        realSpeed << ",";
-        realSpeed << vel2;
-        realSpeed << ",";
-        realSpeed << vel3;
-        realSpeed << ",";
-        realSpeed << vel4;
-        realSpeed << ",";
-        realSpeed << vel5;
-        realSpeed << ",";
-        realSpeed << vel6;
-        realSpeed << ",\n";
+        //ofstream realSpeed;
+        //realSpeed.open("realSpeed.csv", std::ios::out | std::ios::app);
+        //realSpeed << vel1;
+        //realSpeed << ",";
+        //realSpeed << vel2;
+        //realSpeed << ",";
+        //realSpeed << vel3;
+        //realSpeed << ",";
+        //realSpeed << vel4;
+        //realSpeed << ",";
+        //realSpeed << vel5;
+        //realSpeed << ",";
+        //realSpeed << vel6;
+        //realSpeed << ",\n";
 
-        realSpeed.close();
+        //realSpeed.close();
 
         // Calculate Jacobian Robot matrix
         Eigen::Matrix<double, 6, 6> jacobiRobot{
@@ -357,9 +430,6 @@ int main()
             {-947.0 / Z,        0, (u4 - 160.0) / Z, 0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304),        -0.00106 * pow((u4 - 160.0),2) - 947.0,     v4 - 100.0},
             {0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
         };
-
-  /*      cout << "matrix" << endl;
-        cout << jacobiImage << endl;*/
 
         if (jacobiRobot.determinant() == 0) {
             // Add zero set here
@@ -517,7 +587,7 @@ int main()
         }
 
         // Calculate joint speed
-        Eigen::Matrix<double, 6, 1>jointSpeed = 5 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
+        Eigen::Matrix<double, 6, 1>jointSpeed = 0.5 * jacobiRobot.inverse()* jacobiImagePInv*errorVect;
         cout << "Calculated joint speed" << endl;
         cout << jointSpeed << endl;
 
@@ -540,22 +610,22 @@ int main()
         //int speed2 = 0;
         //int speed3 = 0;
         // write to csv
-        ofstream myfile;
-        myfile.open("speed.csv", std::ios::out | std::ios::app);
-        myfile << speed1;
-        myfile << ",";
-        myfile << speed2;
-        myfile << ",";
-        myfile << speed3;
-        myfile << ",";
-        myfile << speed4;
-        myfile << ",";
-        myfile << speed5;
-        myfile << ",";
-        myfile << speed6;
-        myfile << ",\n";
+        //ofstream myfile;
+        //myfile.open("speed.csv", std::ios::out | std::ios::app);
+        //myfile << speed1;
+        //myfile << ",";
+        //myfile << speed2;
+        //myfile << ",";
+        //myfile << speed3;
+        //myfile << ",";
+        //myfile << speed4;
+        //myfile << ",";
+        //myfile << speed5;
+        //myfile << ",";
+        //myfile << speed6;
+        //myfile << ",\n";
       
-        myfile.close();
+        //myfile.close();
 
 
   
@@ -615,11 +685,93 @@ int main()
         auto stop = high_resolution_clock::now();
         auto duration = duration_cast<milliseconds>(stop - start);
         std::cout << "duration: " << duration.count()<< std::endl;
+        //ofstream AllDataCSV;
+        //AllDataCSV.open("alldata.csv");
+        AllDataCSV << u1;
+        AllDataCSV << ",";
+        AllDataCSV << v1;
+        AllDataCSV << ",";
+        AllDataCSV << u2;
+        AllDataCSV << ",";
+        AllDataCSV << v2;
+        AllDataCSV << ",";
+        AllDataCSV << u3;
+        AllDataCSV << ",";
+        AllDataCSV << v3;
+        AllDataCSV << ",";
+        AllDataCSV << u4;
+        AllDataCSV << ",";
+        AllDataCSV << v4;
+        AllDataCSV << ",";
+        AllDataCSV << q1;
+        AllDataCSV << ",";
+        AllDataCSV << q2;
+        AllDataCSV << ",";
+        AllDataCSV << q3;
+        AllDataCSV << ",";
+        AllDataCSV << q4;
+        AllDataCSV << ",";
+        AllDataCSV << q5;
+        AllDataCSV << ",";
+        AllDataCSV << q6;
+        AllDataCSV << ",";
+        AllDataCSV << vel1;
+        AllDataCSV << ",";
+        AllDataCSV << vel2;
+        AllDataCSV << ",";
+        AllDataCSV << vel3;
+        AllDataCSV << ",";
+        AllDataCSV << vel4;
+        AllDataCSV << ",";
+        AllDataCSV << vel5;
+        AllDataCSV << ",";
+        AllDataCSV << vel6;
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(0, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(1, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(2, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(3, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(4, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(5, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(6, 0);
+        AllDataCSV << ",";
+        AllDataCSV << errorVect(7, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(0, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(1, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(2, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(3, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(4, 0);
+        AllDataCSV << ",";
+        AllDataCSV << jointSpeed(5, 0);
+        AllDataCSV << ",";
+        AllDataCSV << speed1;
+        AllDataCSV << ",";
+        AllDataCSV << speed2;
+        AllDataCSV << ",";
+        AllDataCSV << speed3;
+        AllDataCSV << ",";
+        AllDataCSV << speed4;
+        AllDataCSV << ",";
+        AllDataCSV << speed5;
+        AllDataCSV << ",";
+        AllDataCSV << speed6;
+        AllDataCSV << ",";
+        AllDataCSV << duration.count();
+        AllDataCSV << ",\n";
 
 
     }
-
     std::printf("done");
-
-    return 0;
+    return EXIT_SUCCESS;
 }
