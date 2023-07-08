@@ -143,8 +143,8 @@ int main()
 	// Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
 	string mockData = "0,0,0,0,0";
 
-	//int numberOfModules = NmcInit("COM1:", 19200);
-	int numberOfModules = NmcInit("COM3:", 19200);
+	int numberOfModules = NmcInit("COM1:", 19200);
+	//int numberOfModules = NmcInit("COM3:", 19200);
 	printf("Number of Modules detected: %d\n", numberOfModules);
 	if (numberOfModules == 0)
 	{
