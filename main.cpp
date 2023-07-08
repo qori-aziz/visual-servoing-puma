@@ -564,12 +564,12 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.1,0,0,0,0,0},
+			{0.2,0,0,0,0,0},
 			{0,0.1,0,0,0,0},
-			{0,0,0.1,0,0,0},
-			{0,0,0,0.1,0,0},
-			{0,0,0,0,0.1,0},
-			{0,0,0,0,0,0.1},
+			{0,0,0.2,0,0,0},
+			{0,0,0,0.2,0,0},
+			{0,0,0,0,0.2,0},
+			{0,0,0,0,0,0.2},
 		};
 		Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		cout << "Calculated joint speed" << endl;
@@ -593,10 +593,10 @@ int main()
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
-		speed2 = speed2 * 1;
-		speed3 = speed3 * 1;
-		speed4 = speed4 * -1;
-		speed5 = speed5 * -1;
+		speed2 = speed2 * -1;
+		speed3 = speed3 * -1;
+		speed4 = speed4 * 1;
+		speed5 = speed5 * 1;
 		speed6 = speed6 * -1;
 
 		//int speed1 = -50000;
