@@ -29,10 +29,10 @@ const double v3_ref = 25;
 const double u4_ref = 257;
 const double v4_ref = 193;
 const double q1_ref = 0;
-const double q2_ref = M_PI / 2;
-const double q3_ref = -M_PI / 2;
+const double q2_ref = -M_PI / 2;
+const double q3_ref = M_PI / 2;
 const double q4_ref = 0;
-const double q5_ref = M_PI / 2;
+const double q5_ref = -M_PI / 2;
 const double q6_ref = 0;
 const double decoder1 = 50000;
 const double decoder2 = 60000;
@@ -422,10 +422,10 @@ int main()
 
 		// Calulate new q1 to q6
 		q1 = (q1_ref + ((pos1 / decoder1 * 6.2832) * 1));
-		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
-		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
+		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * -1));
+		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * -1));
 		q4 = (q4_ref + ((pos4 / decoder3 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder3 * 6.2832) * -1));
+		q5 = (q5_ref + ((pos5 / decoder3 * 6.2832) * 1));
 		q6 = q6_ref + ((pos6 / decoder3 * 6.2832) * -1);
 
 		//// write to csv
@@ -564,12 +564,12 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.1,0,0,0,0,0},
+			{0.2,0,0,0,0,0},
 			{0,0.1,0,0,0,0},
-			{0,0,0.1,0,0,0},
-			{0,0,0,0.1,0,0},
-			{0,0,0,0,0.1,0},
-			{0,0,0,0,0,0.1},
+			{0,0,0.2,0,0,0},
+			{0,0,0,0.2,0,0},
+			{0,0,0,0,0.2,0},
+			{0,0,0,0,0,0.5},
 		};
 		Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		cout << "Calculated joint speed" << endl;
@@ -593,10 +593,10 @@ int main()
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
-		speed2 = speed2 * 1;
-		speed3 = speed3 * 1;
+		speed2 = speed2 * -1;
+		speed3 = speed3 * -1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * -1;
+		speed5 = speed5 * 1;
 		speed6 = speed6 * -1;
 
 		//int speed1 = -50000;
