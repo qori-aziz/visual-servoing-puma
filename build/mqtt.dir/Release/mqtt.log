@@ -1,9 +1,9 @@
 ﻿  main.cpp
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(146,25): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(572,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(573,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(574,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(575,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(576,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(577,20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(146,22): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(579,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(580,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(581,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(582,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(583,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(584,14): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   mqtt.vcxproj -> C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\build\Release\mqtt.exe
