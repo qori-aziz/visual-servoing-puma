@@ -215,7 +215,7 @@ int main()
     AllDataCSV << "u1,v1,u2,v2,u3,v3,u4,v4,pos1,pos2,pos3,pos4,pos5,pos6,vel1,vel2,vel3,vel4,vel5,vel6,err1,err2,err3,err4,err5,err6,err7,err8,speed1,speed2,speed3,speed4,speed5,speed6,cmdspeed1,cmdspeed2,cmdspeed3,cmdspeed4,cmdspeed5,cmdspeed6,time";
     AllDataCSV << ",\n";
 
-    signal(SIGINT, signal_callback_handler);
+    //signal(SIGINT, signal_callback_handler);
     while (running)
     {
         auto start = high_resolution_clock::now();
@@ -230,6 +230,10 @@ int main()
         if (msg) {
             if (msg->get_topic() == "data") {
                 mockData = msg->to_string();
+            }
+
+            if (mockData.length() != 19) {
+                continue;
             }
         }
         else {
@@ -262,51 +266,111 @@ int main()
 
         string s;
         istringstream ss{ mockData };
-
-        // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
-        int i = 0;
-        while (getline(ss, s, ',')) {
-            double temp = stod(s);
-            switch (i) {
-            case 0:
-                i++;
-                Z = temp;
-                break;
-            case 1:
-                i++;
-                u1 = temp;
-                u2 = temp;
-                break;
-            case 2:
-                i++;
-                v1 = temp;
-                v3 = temp;
-                break;
-            case 3:
-                i++;
-                u3 = temp;
-                u4 = temp;
-                break;
-            case 4:
-                i = 0;
-                v2 = temp;
-                v4 = temp;
-                break;
-            default:
-                i = 0;
-                break;
-            }
-            strings.push_back(s);
-        }
-    
-        if (Z == 0) {
+        double temp;
+        string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
+        tempZ = mockData.substr(0, 3);
+        temp = stod(tempZ);
+        if (temp == 0) {
             for (int i = 1; i <= 6; i++) //try 6 motor
             {
                 ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
             }
-            //cout << "depth zero" << endl;
             continue;
         }
+        Z = temp;
+
+        tempu1u2 = mockData.substr(4, 3);
+        temp = stod(tempu1u2);
+        if (temp == 0) {
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
+            continue;
+        }
+        u1 = temp;
+        u2 = temp;
+
+        tempv1v3 = mockData.substr(8, 3);
+        temp = stod(tempv1v3);
+        if (temp == 0) {
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
+            continue;
+        }
+        v1 = temp;
+        v3 = temp;
+
+        tempu3u4 = mockData.substr(12, 3);
+        temp = stod(tempu3u4);
+        if (temp == 0) {
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
+            continue;
+        }
+        u3 = temp;
+        u4 = temp;
+
+        tempv2v4 = mockData.substr(16, 3);
+        temp = stod(tempv2v4);
+        if (temp == 0) {
+            for (int i = 1; i <= 6; i++) //try 6 motor
+            {
+                ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+            }
+            continue;
+        }
+        v2 = temp;
+        v4 = temp;
+
+        // Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
+        //int i = 0;
+        //while (getline(ss, s, ',')) {
+        //    double temp = stod(s);
+        //    switch (i) {
+        //    case 0:
+        //        i++;
+        //        Z = temp;
+        //        break;
+        //    case 1:
+        //        i++;
+        //        u1 = temp;
+        //        u2 = temp;
+        //        break;
+        //    case 2:
+        //        i++;
+        //        v1 = temp;
+        //        v3 = temp;
+        //        break;
+        //    case 3:
+        //        i++;
+        //        u3 = temp;
+        //        u4 = temp;
+        //        break;
+        //    case 4:
+        //        i = 0;
+        //        v2 = temp;
+        //        v4 = temp;
+        //        break;
+        //    default:
+        //        i = 0;
+        //        break;
+        //    }
+        //    strings.push_back(s);
+        //}
+    
+        //if (Z == 0) {
+        //    for (int i = 1; i <= 6; i++) //try 6 motor
+        //    {
+        //        ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+        //    }
+        //    //cout << "depth zero" << endl;
+        //    continue;
+        //}
 
         // get current position
         unsigned char addrMotor1 = 6; //module address
@@ -350,12 +414,12 @@ int main()
      
 
         // Calulate new q1 to q6
-        q1 = (q1_ref + (pos1 / decoder1 * 6.2832) * 1);
-        q2 = (q2_ref + (pos2 / decoder2 * 6.2832) * -1);
-        q3 = (q3_ref + (pos3 / decoder3 * 6.2832) * -1);
-        q4 = (q4_ref + (pos4 / decoder3 * 6.2832));
+        q1 = (q1_ref + ((pos1 / decoder1 * 6.2832) * 1));
+        q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * -1));
+        q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * -1));
+        q4 = (q4_ref + ((pos4 / decoder3 * 6.2832) * -1));
         q5 = (q5_ref + (pos5 / decoder3 * 6.2832)*1 );
-        q6 = q6_ref + (pos6 / decoder3 * 6.2832);
+        q6 = q6_ref + ((pos6 / decoder3 * 6.2832) *-1);
 
         //// write to csv
         //ofstream position;
@@ -515,9 +579,9 @@ int main()
         //speed1 = speed1 * -1;
         speed2 = speed2 * -1;
         speed3 = speed3 * -1;
-        //speed4 = speed4 * -1;
+        speed4 = speed4 * -1;
         speed5 = speed5;
-        //speed6 = speed6 * -1;
+        speed6 = speed6 * -1;
 
         //int speed1 = -50000;
         //int speed2 = 0;
