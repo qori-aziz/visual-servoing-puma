@@ -9,6 +9,29 @@ import paho.mqtt.client as mqtt
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
+# from threading import Timer
+# from schedule_machine import Timers, Chronograph
+import schedule
+import time
+
+depth = 0
+u_lefttop = 0
+v_lefttop = 0
+u_rightdown = 0
+v_rightdown = 0
+data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
+
+## Set MQTT
+Id = "producerPy"
+Ip = "localhost"
+client = mqtt.Client(Id)
+# client.max_queued_messages_set(1)
+# client.max_inflight_messages_set(1)
+client.connect(Ip, 1883, 60)
+
+def publish():
+    client.publish("data", data,qos=0)
+
 
 # Set pixycam
 res = p.initializing()
@@ -18,13 +41,6 @@ if res != 0:
 ## Set YOLO
 model = d.initialization()
 
-## Set MQTT
-Id = "producerPy"
-Ip = "localhost"
-client = mqtt.Client(Id)
-# client.max_queued_messages_set(1)
-# client.max_inflight_messages_set(1)
-client.connect(Ip, 1883, 60)
 f = open('errdata.csv', 'w')
 # writer = csv.writer(f)
 
@@ -50,9 +66,15 @@ modelLinear.fit(x,y)
 
 x_ = PolynomialFeatures(degree=2, include_bias=False).fit_transform(x)
 modelQuadratic = LinearRegression().fit(x_, y)
-
+# timers_container = Timers()
+# timers_container.create_timer('every poll', publish)
+# Chronograph(timers_container.timer_jobs, 'US/Pacific')
+schedule.every(0.15).seconds.do(publish)
+# t = Timer(0.150, publish(client, data))
+# t.start() # after 30 seconds, "hello, world" will be printed`
 try:
     while True:
+        schedule.run_pending()
         t0 = time.time()
         p.getFrame()
 
@@ -91,8 +113,8 @@ try:
             depth = int(y_pred_quadratic[0])
             # data = (width,length)
             # writer.writerow(data)
-            data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
-            client.publish("data", data)        
+            # client.publish("data", data, qos=0)
+        data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
         t1 = time.time()
         one_frame_time = 1E3 * (t1 - t0)
         print(f'Total 1 frame time: ({one_frame_time:.1f}ms)')
