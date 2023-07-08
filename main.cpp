@@ -644,6 +644,8 @@ int main()
 		AllDataCSV << ",";
 		AllDataCSV << speed6;
 		AllDataCSV << ",";
+		AllDataCSV << normErr;
+		AllDataCSV << ",";
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<milliseconds>(stop - start);
 		std::cout << "duration: " << duration.count() << std::endl;
