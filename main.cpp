@@ -221,10 +221,10 @@ int main()
 		auto start = high_resolution_clock::now();
 		//// Construct a message pointer to hold an incoming message.
 		mqtt::const_message_ptr messagePointer;
-		for (int i = 1; i <= 6; i++) //try 6 motor
-		{
-		    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-		}
+		//for (int i = 1; i <= 6; i++) //try 6 motor
+		//{
+		//    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//}
 
 		auto msg = client.consume_message();
 		if (msg) {
@@ -249,17 +249,17 @@ int main()
 		// Try to consume a message, passing messagePointer by reference.
 		// If a message is consumed, the function will return `true`,
 		// allowing control to enter the if-statement body.        
-		if (client.try_consume_message(&messagePointer))
-		{
-		    // construct a string from the message payload.
-		    std::string topicstring = messagePointer->get_topic();
-		    std::string messagestring = messagePointer->get_payload_str();
-		    if (topicstring == "data")
-		    {
-		        //std::cout << messagestring << std::endl;
-		        mockData = messagestring;
-		    }
-		}
+		//if (client.try_consume_message(&messagePointer))
+		//{
+		//    // construct a string from the message payload.
+		//    std::string topicstring = messagePointer->get_topic();
+		//    std::string messagestring = messagePointer->get_payload_str();
+		//    if (topicstring == "data")
+		//    {
+		//        //std::cout << messagestring << std::endl;
+		//        mockData = messagestring;
+		//    }
+		//}
 
 		double temp;
 		string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
@@ -401,8 +401,8 @@ int main()
 			{-947.0 / Z,        0, (u4 - 160.0) / Z, 0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304),        -0.00106 * pow((u4 - 160.0),2) - 947.0,     v4 - 100.0},
 			{0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
 		};
-		cout << "Calculated image speed" << endl;
-		cout << jacobiImage << endl;
+	/*	cout << "Calculated image speed" << endl;
+		cout << jacobiImage << endl;*/
 
 
 		if (jacobiRobot.determinant() == 0) {
@@ -447,8 +447,8 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.02,0,0,0,0,0},
-			{0,0.01,0,0,0,0},
+			{0.03,0,0,0,0,0},
+			{0,0.02,0,0,0,0},
 			{0,0,0.02,0,0,0},
 			{0,0,0,0.02,0,0},
 			{0,0,0,0,0.02,0},
@@ -485,21 +485,21 @@ int main()
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
-		speed2 = speed2 * 1;
-		speed3 = speed3 * 1;
+		speed2 = speed2 * -1;
+		speed3 = speed3 * -1;
 		speed4 = speed4 * -1;
 		speed5 = speed5 * -1;
 		speed6 = speed6 * -1;
-		Eigen::Matrix<int, 6, 1>realsSpeed{
-			{speed1},
-			{speed2},
-			{speed3},
-			{speed4},
-			{speed5},
-			{speed6},
-		};
-		cout << "Calculated joint speed" << endl;
-		cout << realsSpeed << endl;
+		//Eigen::Matrix<int, 6, 1>realsSpeed{
+		//	{speed1},
+		//	{speed2},
+		//	{speed3},
+		//	{speed4},
+		//	{speed5},
+		//	{speed6},
+		//};
+		//cout << "Calculated joint speed" << endl;
+		//cout << realsSpeed << endl;
 
 
 		// Be careful when addressing. Address 1 is farthest from the PC
