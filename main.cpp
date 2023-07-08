@@ -207,7 +207,7 @@ int main()
 	//client.subscribe("errhor");
 	std::printf("tes5");
 	// begin the client's message processing loop, filling a queue with messages.
-	//client.start_consuming();
+	client.start_consuming();
 
 	bool running = true;
 	ofstream AllDataCSV;
@@ -226,40 +226,47 @@ int main()
 		//    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
 		//}
 
-		auto msg = client.consume_message();
-		if (msg) {
-			if (msg->get_topic() == "data") {
-				mockData = msg->to_string();
-			}
+		//auto msg = client.consume_message();
+		//if (msg) {
+		//	if (msg->get_topic() == "data") {
+		//		mockData = msg->to_string();
+		//	}
 
-			if (mockData.length() != 19) {
-				continue;
-			}
+		//	if (mockData.length() != 19) {
+		//		continue;
+		//	}
+		//}
+		//else {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+
+		//	//cout << "depth zero" << endl;
+		//	continue;
+		//}
+
+		// Try to consume a message, passing messagePointer by reference.
+		// If a message is consumed, the function will return `true`,
+		// allowing control to enter the if-statement body.        
+		if (client.try_consume_message(&messagePointer))
+		{
+		    // construct a string from the message payload.
+		    std::string topicstring = messagePointer->get_topic();
+		    std::string messagestring = messagePointer->get_payload_str();
+		    if (topicstring == "data")
+		    {
+		        //std::cout << messagestring << std::endl;
+		        mockData = messagestring;
+		    }
 		}
 		else {
 			for (int i = 1; i <= 6; i++) //try 6 motor
 			{
 				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
 			}
-
-			//cout << "depth zero" << endl;
 			continue;
 		}
-
-		// Try to consume a message, passing messagePointer by reference.
-		// If a message is consumed, the function will return `true`,
-		// allowing control to enter the if-statement body.        
-		//if (client.try_consume_message(&messagePointer))
-		//{
-		//    // construct a string from the message payload.
-		//    std::string topicstring = messagePointer->get_topic();
-		//    std::string messagestring = messagePointer->get_payload_str();
-		//    if (topicstring == "data")
-		//    {
-		//        //std::cout << messagestring << std::endl;
-		//        mockData = messagestring;
-		//    }
-		//}
 
 		double temp;
 		string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
@@ -447,9 +454,9 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.03,0,0,0,0,0},
-			{0,0.02,0,0,0,0},
-			{0,0,0.02,0,0,0},
+			{0.003,0,0,0,0,0},
+			{0,0.002,0,0,0,0},
+			{0,0,0.019,0,0,0},
 			{0,0,0,0.02,0,0},
 			{0,0,0,0,0.02,0},
 			{0,0,0,0,0,0.02},
@@ -485,8 +492,8 @@ int main()
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
-		speed2 = speed2 * -1;
-		speed3 = speed3 * -1;
+		speed2 = speed2 * 1;
+		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
 		speed5 = speed5 * -1;
 		speed6 = speed6 * -1;
