@@ -115,14 +115,14 @@ int main()
 	double q4 = 0;
 	double q5 = 0;
 	double q6 = 0;
-	double u1 = 0;
-	double v1 = 0;
-	double u2 = 0;
-	double v2 = 0;
-	double u3 = 0;
-	double v3 = 0;
-	double u4 = 0;
-	double v4 = 0;
+	double u1 = 80;
+	double v1 = 116;
+	double u2 = 169;
+	double v2 = 116;
+	double u3 = 80;
+	double v3 = 206;
+	double u4 = 169;
+	double v4 = 206;
 	double Z = 50;
 
 	HINSTANCE hModule = LoadLibraryA("NMCLIB04v64.dll");
@@ -143,8 +143,8 @@ int main()
 	// Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
 	string mockData = "0,0,0,0,0";
 
-	int numberOfModules = NmcInit("COM1:", 19200);
-	//int numberOfModules = NmcInit("COM3:", 19200);
+	//int numberOfModules = NmcInit("COM1:", 19200);
+	int numberOfModules = NmcInit("COM3:", 19200);
 	printf("Number of Modules detected: %d\n", numberOfModules);
 	if (numberOfModules == 0)
 	{
@@ -221,10 +221,10 @@ int main()
 		auto start = high_resolution_clock::now();
 		//// Construct a message pointer to hold an incoming message.
 		mqtt::const_message_ptr messagePointer;
-		//for (int i = 1; i <= 6; i++) //try 6 motor
-		//{
-		//    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-		//}
+		for (int i = 1; i <= 6; i++) //try 6 motor
+		{
+		    ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		}
 
 		auto msg = client.consume_message();
 		if (msg) {
@@ -246,26 +246,21 @@ int main()
 			continue;
 		}
 
-		//// Try to consume a message, passing messagePointer by reference.
-		//// If a message is consumed, the function will return `true`,
-		//// allowing control to enter the if-statement body.        
-		//if (client.try_consume_message(&messagePointer))
-		//{
-		//    // construct a string from the message payload.
-		//    std::string topicstring = messagePointer->get_topic();
-		//    std::string messagestring = messagePointer->get_payload_str();
-		//    if (topicstring == "data")
-		//    {
-		//        //std::cout << messagestring << std::endl;
-		//        mockData = messagestring;
-		//    }
-		//}
+		// Try to consume a message, passing messagePointer by reference.
+		// If a message is consumed, the function will return `true`,
+		// allowing control to enter the if-statement body.        
+		if (client.try_consume_message(&messagePointer))
+		{
+		    // construct a string from the message payload.
+		    std::string topicstring = messagePointer->get_topic();
+		    std::string messagestring = messagePointer->get_payload_str();
+		    if (topicstring == "data")
+		    {
+		        //std::cout << messagestring << std::endl;
+		        mockData = messagestring;
+		    }
+		}
 
-
-		vector<string> strings;
-
-		string s;
-		istringstream ss{ mockData };
 		double temp;
 		string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
 		tempZ = mockData.substr(0, 3);
@@ -327,51 +322,6 @@ int main()
 		v2 = temp;
 		v4 = temp;
 
-		// Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
-		//int i = 0;
-		//while (getline(ss, s, ',')) {
-		//    double temp = stod(s);
-		//    switch (i) {
-		//    case 0:
-		//        i++;
-		//        Z = temp;
-		//        break;
-		//    case 1:
-		//        i++;
-		//        u1 = temp;
-		//        u2 = temp;
-		//        break;
-		//    case 2:
-		//        i++;
-		//        v1 = temp;
-		//        v3 = temp;
-		//        break;
-		//    case 3:
-		//        i++;
-		//        u3 = temp;
-		//        u4 = temp;
-		//        break;
-		//    case 4:
-		//        i = 0;
-		//        v2 = temp;
-		//        v4 = temp;
-		//        break;
-		//    default:
-		//        i = 0;
-		//        break;
-		//    }
-		//    strings.push_back(s);
-		//}
-
-		//if (Z == 0) {
-		//    for (int i = 1; i <= 6; i++) //try 6 motor
-		//    {
-		//        ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-		//    }
-		//    //cout << "depth zero" << endl;
-		//    continue;
-		//}
-
 		// get current position
 		unsigned char addrMotor1 = 6; //module address
 		unsigned char addrMotor2 = 5; //module address
@@ -424,45 +374,12 @@ int main()
 		q1 = (q1_ref + ((pos1 / decoder1 * 6.2832) * 1));
 		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
 		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
-		q4 = (q4_ref + ((pos4 / decoder3 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder3 * 6.2832) * -1));
-		q6 = q6_ref + ((pos6 / decoder3 * 6.2832) * -1);
+		q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
+		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * -1));
+		q6 = q6_ref + ((pos6 / decoder6 * 6.2832) * -1);
 
-		//// write to csv
-		//ofstream position;
-		//position.open("realPos.csv", std::ios::out | std::ios::app);
-		//position << pos1;
-		//position << ",";
-		//position << pos2;
-		//position << ",";
-		//position << pos3;
-		//position << ",";
-		//position << pos4;
-		//position << ",";
-		//position << pos5;
-		//position << ",";
-		//position << pos6;
-		//position << ",\n";
 
-		//position.close();
-
-		//ofstream realSpeed;
-		//realSpeed.open("realSpeed.csv", std::ios::out | std::ios::app);
-		//realSpeed << vel1;
-		//realSpeed << ",";
-		//realSpeed << vel2;
-		//realSpeed << ",";
-		//realSpeed << vel3;
-		//realSpeed << ",";
-		//realSpeed << vel4;
-		//realSpeed << ",";
-		//realSpeed << vel5;
-		//realSpeed << ",";
-		//realSpeed << vel6;
-		//realSpeed << ",\n";
-
-		//realSpeed.close();
-
+		// This matrix is supposed to be right
 		// Calculate Jacobian Robot matrix
 		Eigen::Matrix<double, 6, 6> jacobiRobot{
 			{(79 * cos(q2) * cos(q3) * sin(q1)) / 10 - (1016 * cos(q2) * sin(q1)) / 5 - (127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 - (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2 - (79 * sin(q1) * sin(q2) * sin(q3)) / 10 - (627 * cos(q1)) / 5 - (1016 * cos(q2) * sin(q1) * sin(q3)) / 5 - (1016 * cos(q3) * sin(q1) * sin(q2)) / 5, cos(q1) * ((1016 * cos(q2) * cos(q3)) / 5 - (1016 * sin(q2)) / 5 + (79 * cos(q2) * sin(q3)) / 10 + (79 * cos(q3) * sin(q2)) / 10 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2), cos(q1) * ((1016 * cos(q2) * cos(q3)) / 5 + (79 * cos(q2) * sin(q3)) / 10 + (79 * cos(q3) * sin(q2)) / 10 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) ,(cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2)) * ((1016 * cos(q2) * cos(q3)) / 5 - (1016 * sin(q2) * sin(q3)) / 5 + (127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - (cos(q2) * cos(q3) - sin(q2) * sin(q3)) * ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2 + (1016 * cos(q2) * sin(q1) * sin(q3)) / 5 + (1016 * cos(q3) * sin(q1) * sin(q2)) / 5) , (cos(q1) * cos(q4) + sin(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1))) * ((127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - sin(q4) * ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2) * (cos(q2) * sin(q3) + cos(q3) * sin(q2)) ,(sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1))) + cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) * ((127 * cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3))) / 2 - (127 * cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) / 2) - ((127 * sin(q5) * (cos(q1) * sin(q4) - cos(q4) * (sin(q1) * sin(q2) * sin(q3) - cos(q2) * cos(q3) * sin(q1)))) / 2 + (127 * cos(q5) * (cos(q2) * sin(q1) * sin(q3) + cos(q3) * sin(q1) * sin(q2))) / 2) * (cos(q5) * (cos(q2) * cos(q3) - sin(q2) * sin(q3)) - cos(q4) * sin(q5) * (cos(q2) * sin(q3) + cos(q3) * sin(q2))) },
@@ -484,6 +401,9 @@ int main()
 			{-947.0 / Z,        0, (u4 - 160.0) / Z, 0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304),        -0.00106 * pow((u4 - 160.0),2) - 947.0,     v4 - 100.0},
 			{0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
 		};
+		cout << "Calculated image speed" << endl;
+		cout << jacobiImage << endl;
+
 
 		if (jacobiRobot.determinant() == 0) {
 			// Add zero set here
@@ -512,46 +432,9 @@ int main()
 		};
 
 		double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2));
-		//ofstream errorVisual;
-		//errorVisual.open("errorvisual.csv", std::ios::out | std::ios::app);
-		//errorVisual << u1;
-		//errorVisual << ",";
-		//errorVisual << v1;
-		//errorVisual << ",";
-		//errorVisual << u2;
-		//errorVisual << ",";
-		//errorVisual << v2;
-		//errorVisual << ",";
-		//errorVisual << u3;
-		//errorVisual << ",";
-		//errorVisual << v3;
-		//errorVisual << ",";
-		//errorVisual << u4;
-		//errorVisual << ",";
-		//errorVisual << v4;
-		//errorVisual << ",";
-		//errorVisual << errorVect(0,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(1,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(2,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(3,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(4,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(5,0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(6, 0);
-		//errorVisual << ",";
-		//errorVisual << errorVect(7, 0);
-		//errorVisual << ",";
-		//errorVisual << normErr;
-		//errorVisual << ",\n";
 
-		//errorVisual.close();
 
-		if (normErr <= 40) {
+		if (normErr <= 50) {
 			// Add zero set here
 			for (int i = 1; i <= 6; i++) //try 6 motor
 			{
@@ -564,24 +447,33 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.2,0,0,0,0,0},
-			{0,0.1,0,0,0,0},
-			{0,0,0.2,0,0,0},
-			{0,0,0,0.2,0,0},
-			{0,0,0,0,0.2,0},
-			{0,0,0,0,0,0.2},
+			{0.02,0,0,0,0,0},
+			{0,0.01,0,0,0,0},
+			{0,0,0.02,0,0,0},
+			{0,0,0,0.02,0,0},
+			{0,0,0,0,0.02,0},
+			{0,0,0,0,0,0.02},
 		};
 		Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
-		cout << "Calculated joint speed" << endl;
-		cout << jointSpeed << endl;
+		//Eigen::Matrix<double, 6, 1 >desiredSpeed{
+		//	{0},
+		//	{0},
+		//	{0},
+		//	{1},
+		//	{0},
+		//	{0},
+		//};
+		//Eigen::Matrix<double, 6, 1>jointSpeed = jacobiRobot.inverse() * desiredSpeed;
+		//cout << "Calculated joint speed" << endl;
+		//cout << jointSpeed << endl;
 
 		// Convert from rad/s to decoder/tick time
-		int speed1 = jointSpeed(0, 0) * 0.15915 * decoder1;
-		int speed2 = jointSpeed(1, 0) * 0.15915 * decoder2;
-		int speed3 = jointSpeed(2, 0) * 0.15915 * decoder3;
-		int speed4 = jointSpeed(3, 0) * 0.15915 * decoder4;
-		int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5;
-		int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6;
+		int speed1 = jointSpeed(0, 0) * 0.15915 * decoder1 * servoticktime * 65536;
+		int speed2 = jointSpeed(1, 0) * 0.15915 * decoder2 * servoticktime * 65536;
+		int speed3 = jointSpeed(2, 0) * 0.15915 * decoder3 * servoticktime * 65536;
+		int speed4 = jointSpeed(3, 0) * 0.15915 * decoder4 * servoticktime * 65536;
+		int speed5 = jointSpeed(4, 0) * 0.15915 * decoder5 * servoticktime * 65536;
+		int speed6 = jointSpeed(5, 0) * 0.15915 * decoder6 * servoticktime * 65536;
 
 
 		/*
@@ -593,33 +485,21 @@ int main()
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
-		speed2 = speed2 * -1;
-		speed3 = speed3 * -1;
-		speed4 = speed4 * 1;
-		speed5 = speed5 * 1;
+		speed2 = speed2 * 1;
+		speed3 = speed3 * 1;
+		speed4 = speed4 * -1;
+		speed5 = speed5 * -1;
 		speed6 = speed6 * -1;
-
-		//int speed1 = -50000;
-		//int speed2 = 0;
-		//int speed3 = 0;
-		// write to csv
-		//ofstream myfile;
-		//myfile.open("speed.csv", std::ios::out | std::ios::app);
-		//myfile << speed1;
-		//myfile << ",";
-		//myfile << speed2;
-		//myfile << ",";
-		//myfile << speed3;
-		//myfile << ",";
-		//myfile << speed4;
-		//myfile << ",";
-		//myfile << speed5;
-		//myfile << ",";
-		//myfile << speed6;
-		//myfile << ",\n";
-
-		//myfile.close();
-
+		Eigen::Matrix<int, 6, 1>realsSpeed{
+			{speed1},
+			{speed2},
+			{speed3},
+			{speed4},
+			{speed5},
+			{speed6},
+		};
+		cout << "Calculated joint speed" << endl;
+		cout << realsSpeed << endl;
 
 
 		// Be careful when addressing. Address 1 is farthest from the PC
