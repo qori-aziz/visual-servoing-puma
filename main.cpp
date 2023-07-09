@@ -20,14 +20,14 @@ using namespace std;
 using namespace std::chrono;
 
 
-const double u1_ref = 83;
-const double v1_ref = 25;
-const double u2_ref = 83;
-const double v2_ref = 193;
-const double u3_ref = 257;
-const double v3_ref = 25;
-const double u4_ref = 257;
-const double v4_ref = 193;
+const double u1_ref = 60;
+const double v1_ref = 20;
+const double u2_ref = 60;
+const double v2_ref = 197;
+const double u3_ref = 245;
+const double v3_ref = 20;
+const double u4_ref = 245;
+const double v4_ref = 197;
 const double q1_ref = 0;
 const double q2_ref = M_PI / 2;
 const double q3_ref = -M_PI / 2;
