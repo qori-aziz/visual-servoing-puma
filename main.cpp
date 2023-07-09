@@ -261,10 +261,10 @@ int main()
 		    }
 		}
 		else {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
+			//for (int i = 1; i <= 6; i++) //try 6 motor
+			//{
+			//	ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+			//}
 			continue;
 		}
 
