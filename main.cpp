@@ -115,14 +115,14 @@ int main()
 	double q4 = q4_ref;
 	double q5 = q5_ref;
 	double q6 = q6_ref;
-	double u1 = 80;
-	double v1 = 116;
-	double u2 = 169;
-	double v2 = 116;
-	double u3 = 80;
-	double v3 = 206;
-	double u4 = 169;
-	double v4 = 206;
+	double u1 = 0;
+	double v1 = 0;
+	double u2 = 0;
+	double v2 = 0;
+	double u3 = 0;
+	double v3 = 0;
+	double u4 = 0;
+	double v4 = 0;
 	double Z = 50;
 
 	HINSTANCE hModule = LoadLibraryA("NMCLIB04v64.dll");
@@ -268,8 +268,8 @@ int main()
 			continue;
 		}
 
-		string mockData = "297,125,105,167,147";
-		cout << mockData << endl;
+		//string mockData = "297,125,105,167,147";
+		//cout << mockData << endl;
 
 		double temp;
 		string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
@@ -404,11 +404,11 @@ int main()
 
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
-			{0, 0, 1, 0, 0, 0},
 			{0, 1, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0},
 			{1, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 0, 1},
 			{0, 0, 0, 1, 0, 0},
 		};
 
