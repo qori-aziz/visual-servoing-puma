@@ -385,7 +385,7 @@ int main()
 		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
 		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
 		q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * -1));
+		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * 1));
 		q6 = q6_ref + ((pos6 / decoder6 * 6.2832) * -1);
 
 		//cout << pos1 << ", " << pos2 << ", " << pos3 << ", " <<  pos4 << ", " << pos5 << ", " << pos6 << endl;
@@ -409,7 +409,7 @@ int main()
 			{1, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, -1, 0},
 			{0, 0, 0, 0, 0, -1},
-			{0, 0, 0, -1, 0, 0},
+			{0, 0, 0, 1, 0, 0},
 		};
 
 		// Final Jacobian robot matrix
@@ -482,8 +482,8 @@ int main()
 		//Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
 		Eigen::Matrix<double, 6, 1 >desiredSpeed{
-			{5},
 			{0},
+			{5},
 			{0},
 			{0},
 			{0},
@@ -514,7 +514,7 @@ int main()
 		speed2 = speed2 * 1;
 		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * -1;
+		speed5 = speed5 * 1;
 		speed6 = speed6 * -1;
 		//Eigen::Matrix<int, 6, 1>realsSpeed{
 		//	{speed1},
