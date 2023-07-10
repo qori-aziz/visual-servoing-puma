@@ -404,10 +404,10 @@ int main()
 
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
-			{0, -1, 0, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0},
 			{0, 0, 1, 0, 0, 0},
 			{1, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, -1, 0},
+			{0, 0, 0, 0, 1, 0},
 			{0, 0, 0, 0, 0, 1},
 			{0, 0, 0,1, 0, 0},
 		};
