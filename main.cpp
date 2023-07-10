@@ -385,7 +385,7 @@ int main()
 		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
 		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
 		q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * 1));
+		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * -1));
 		q6 = q6_ref + ((pos6 / decoder6 * 6.2832) * -1);
 
 		//cout << pos1 << ", " << pos2 << ", " << pos3 << ", " <<  pos4 << ", " << pos5 << ", " << pos6 << endl;
@@ -404,12 +404,12 @@ int main()
 
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
-			{0, 1, 0, 0, 0, 0},
-			{0, 0, -1, 0, 0, 0},
+			{0,-1, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0},
 			{1, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 1, 0},
-			{0, 0, 0, 0, 0, -1},
-			{0, 0, 0,1, 0, 0},
+			{0, 0, 0, 0,-1, 0},
+			{0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 1, 0, 0},
 		};
 
 		// Final Jacobian robot matrix
@@ -514,7 +514,7 @@ int main()
 		speed2 = speed2 * 1;
 		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * 1;
+		speed5 = speed5 * -1;
 		speed6 = speed6 * -1;
 		//Eigen::Matrix<int, 6, 1>realsSpeed{
 		//	{speed1},
@@ -532,18 +532,18 @@ int main()
 			continue;
 		}*/
 
-		if (speed1 > 120000) {
-			speed1 = 120000;
+		if (speed1 > 100000) {
+			speed1 = 100000;
 		}
-		else if (speed1 < -120000) {
-			speed1 = -120000;
+		else if (speed1 < -100000) {
+			speed1 = -100000;
 		}
 
-		if (speed2 > 100000) {
-			speed2 = 100000;
+		if (speed2 > 80000) {
+			speed2 = 80000;
 		}
-		else if (speed2 < -100000) {
-			speed2 = -100000;
+		else if (speed2 < -80000) {
+			speed2 = -80000;
 		}
 
 		if (speed3 > 150000) {
@@ -707,12 +707,12 @@ int main()
 		AllDataCSV << ",";
 		AllDataCSV << speed6;
 		AllDataCSV << ",";
-		AllDataCSV << normErr;
-		AllDataCSV << ",";
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<milliseconds>(stop - start);
 		std::cout << "duration: " << duration.count() << std::endl;
 		AllDataCSV << duration.count();
+		AllDataCSV << normErr;
+		AllDataCSV << ",";
 		AllDataCSV << ",\n";
 	}
 	std::printf("done");
