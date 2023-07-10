@@ -385,7 +385,7 @@ int main()
 		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
 		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
 		q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * -1));
+		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * 1));
 		q6 = q6_ref + ((pos6 / decoder6 * 6.2832) * -1);
 
 		//cout << pos1 << ", " << pos2 << ", " << pos3 << ", " <<  pos4 << ", " << pos5 << ", " << pos6 << endl;
@@ -514,7 +514,7 @@ int main()
 		speed2 = speed2 * 1;
 		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * -1;
+		speed5 = speed5 * 1;
 		speed6 = speed6 * -1;
 		//Eigen::Matrix<int, 6, 1>realsSpeed{
 		//	{speed1},
@@ -525,7 +525,12 @@ int main()
 		//	{speed6},
 		//};
 		//cout << "Calculated joint speed" << endl;
-		//cout << realsSpeed << endl;
+		//cout << realsSpeed << endl
+
+		// Add singularity escape
+		if (speed1 > 60000 || speed2 > 60000 || speed3 > 150000 || speed4 > 30000 || speed5 >40000 || speed6>25000) {
+			continue;
+		}
 
 
 		// Be careful when addressing. Address 1 is farthest from the PC
