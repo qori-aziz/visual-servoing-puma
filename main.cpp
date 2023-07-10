@@ -536,42 +536,42 @@ int main()
 			speed1 = 60000;
 		}
 		else if (speed1 < -60000) {
-			speed1 = 60000;
+			speed1 = -60000;
 		}
 
 		if (speed2 > 60000) {
 			speed2 = 60000;
 		}
 		else if (speed2 < -60000) {
-			speed2 = 60000;
+			speed2 = -60000;
 		}
 
 		if (speed3 > 150000) {
 			speed3 = 150000;
 		}
 		else if (speed3 < -150000) {
-			speed3 = 150000;
+			speed3 = -150000;
 		}
 
 		if (speed4 > 30000) {
 			speed4 = 30000;
 		}
 		else if (speed4 < -30000) {
-			speed4 = 30000;
+			speed4 = -30000;
 		}
 
 		if (speed5 > 40000) {
 			speed5 = 40000;
 		}
 		else if (speed5 < -40000) {
-			speed5 = 40000;
+			speed5 = -40000;
 		}
 
 		if (speed6 > 25000) {
 			speed6 = 25000;
 		}
 		else if (speed6 < -25000) {
-			speed6 = 25000;
+			speed6 = -25000;
 		}
 
 
