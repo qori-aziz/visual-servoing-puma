@@ -528,9 +528,9 @@ int main()
 		//cout << realsSpeed << endl
 
 		// Add singularity escape
-		if (speed1 > 150000 || speed2 > 150000 || speed3 > 250000 || speed4 > 80000 || speed5 >80000 || speed6>50000) {
+	/*	if (speed1 > 150000 || speed2 > 150000 || speed3 > 250000 || speed4 > 80000 || speed5 >80000 || speed6>50000) {
 			continue;
-		}
+		}*/
 
 		if (speed1 > 60000) {
 			speed1 = 60000;
