@@ -405,10 +405,10 @@ int main()
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
 			{0, -1, 0, 0, 0, 0},
-			{0, 0, -1, 0, 0, 0},
-			{1, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0},
+			{-1, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, -1, 0},
-			{0, 0, 0, 0, 0, -1},
+			{0, 0, 0, 0, 0, 1},
 			{0, 0, 0,1, 0, 0},
 		};
 
@@ -528,9 +528,52 @@ int main()
 		//cout << realsSpeed << endl
 
 		// Add singularity escape
-		if (speed1 > 60000 || speed2 > 60000 || speed3 > 150000 || speed4 > 30000 || speed5 >40000 || speed6>25000) {
+		if (speed1 > 150000 || speed2 > 150000 || speed3 > 250000 || speed4 > 80000 || speed5 >80000 || speed6>50000) {
 			continue;
 		}
+
+		if (speed1 > 60000) {
+			speed1 = 60000;
+		}
+		else if (speed1 < -60000) {
+			speed1 = 60000;
+		}
+
+		if (speed2 > 60000) {
+			speed2 = 60000;
+		}
+		else if (speed2 < -60000) {
+			speed2 = 60000;
+		}
+
+		if (speed3 > 150000) {
+			speed3 = 150000;
+		}
+		else if (speed3 < -150000) {
+			speed3 = 150000;
+		}
+
+		if (speed4 > 30000) {
+			speed4 = 30000;
+		}
+		else if (speed4 < -30000) {
+			speed4 = 30000;
+		}
+
+		if (speed5 > 40000) {
+			speed5 = 40000;
+		}
+		else if (speed5 < -40000) {
+			speed5 = 40000;
+		}
+
+		if (speed6 > 25000) {
+			speed6 = 25000;
+		}
+		else if (speed6 < -25000) {
+			speed6 = 25000;
+		}
+
 
 
 		// Be careful when addressing. Address 1 is farthest from the PC
