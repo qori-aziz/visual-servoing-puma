@@ -143,8 +143,8 @@ int main()
 	// Depth, u_lefttop, v_lefttop, u_rightdown, v_rightdown; 
 	string mockData = "0,0,0,0,0";
 
-	int numberOfModules = NmcInit("COM1:", 19200);
-	//int numberOfModules = NmcInit("COM3:", 19200);
+	//int numberOfModules = NmcInit("COM1:", 19200);
+	int numberOfModules = NmcInit("COM3:", 19200);
 	printf("Number of Modules detected: %d\n", numberOfModules);
 	if (numberOfModules == 0)
 	{
@@ -186,28 +186,28 @@ int main()
 		);
 	}
 
-	std::printf("tes1");
-	// in order to connect the mqtt client to a broker,
-	// define an ip address pointing to a broker. in this case, the localhost on port 1883.
-	std::string ip = "localhost:1883";
-	// then, define an id to be used by the client when communicating with the broker.
-	std::string id = "consumer";
-	// construct a client using the ip and id, specifying usage of mqtt v5.
-	mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
-	/*   auto connOpts = mqtt::connect_options_builder()
-		   .mqtt_version(MQTTVERSION_5)
-		   .automatic_reconnect(seconds(2), seconds(30))
-		   .clean_session(true)
-		   .finalize();*/
-		   // use the connect method of the client to establish a connection to the broker.
-	client.connect();
-	// std::printf("tes4");
-	// in order to receive messages from the broker, specify a topic to subscribe to.
-	client.subscribe("data", 0);
-	//client.subscribe("errhor");
-	std::printf("tes5");
-	// begin the client's message processing loop, filling a queue with messages.
-	client.start_consuming();
+	//std::printf("tes1");
+	//// in order to connect the mqtt client to a broker,
+	//// define an ip address pointing to a broker. in this case, the localhost on port 1883.
+	//std::string ip = "localhost:1883";
+	//// then, define an id to be used by the client when communicating with the broker.
+	//std::string id = "consumer";
+	//// construct a client using the ip and id, specifying usage of mqtt v5.
+	//mqtt::client client(ip, id, mqtt::create_options(MQTTVERSION_5));
+	///*   auto connOpts = mqtt::connect_options_builder()
+	//	   .mqtt_version(MQTTVERSION_5)
+	//	   .automatic_reconnect(seconds(2), seconds(30))
+	//	   .clean_session(true)
+	//	   .finalize();*/
+	//	   // use the connect method of the client to establish a connection to the broker.
+	//client.connect();
+	//// std::printf("tes4");
+	//// in order to receive messages from the broker, specify a topic to subscribe to.
+	//client.subscribe("data", 0);
+	////client.subscribe("errhor");
+	//std::printf("tes5");
+	//// begin the client's message processing loop, filling a queue with messages.
+	//client.start_consuming();
 
 	bool running = true;
 	ofstream AllDataCSV;
@@ -249,88 +249,88 @@ int main()
 		// Try to consume a message, passing messagePointer by reference.
 		// If a message is consumed, the function will return `true`,
 		// allowing control to enter the if-statement body.        
-		if (client.try_consume_message(&messagePointer))
-		{
-		    // construct a string from the message payload.
-		    std::string topicstring = messagePointer->get_topic();
-		    std::string messagestring = messagePointer->get_payload_str();
-		    if (topicstring == "data")
-		    {
-		        //std::cout << messagestring << std::endl;
-		        mockData = messagestring;
-		    }
-		}
-		else {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
+		//if (client.try_consume_message(&messagePointer))
+		//{
+		//    // construct a string from the message payload.
+		//    std::string topicstring = messagePointer->get_topic();
+		//    std::string messagestring = messagePointer->get_payload_str();
+		//    if (topicstring == "data")
+		//    {
+		//        //std::cout << messagestring << std::endl;
+		//        mockData = messagestring;
+		//    }
+		//}
+		//else {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
 
 		//string mockData = "297,125,105,167,147";
 		//cout << mockData << endl;
 
-		double temp;
-		string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
-		tempZ = mockData.substr(0, 3);
-		temp = stod(tempZ);
-		if (temp == 0) {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
-		Z = temp;
+		//double temp;
+		//string tempZ, tempu1u2, tempv1v3, tempu3u4, tempv2v4;
+		//tempZ = mockData.substr(0, 3);
+		//temp = stod(tempZ);
+		//if (temp == 0) {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
+		//Z = temp;
 
-		tempu1u2 = mockData.substr(4, 3);
-		temp = stod(tempu1u2);
-		if (temp == 0) {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
-		u1 = temp;
-		u2 = temp;
+		//tempu1u2 = mockData.substr(4, 3);
+		//temp = stod(tempu1u2);
+		//if (temp == 0) {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
+		//u1 = temp;
+		//u2 = temp;
 
-		tempv1v3 = mockData.substr(8, 3);
-		temp = stod(tempv1v3);
-		if (temp == 0) {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
-		v1 = temp;
-		v3 = temp;
+		//tempv1v3 = mockData.substr(8, 3);
+		//temp = stod(tempv1v3);
+		//if (temp == 0) {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
+		//v1 = temp;
+		//v3 = temp;
 
-		tempu3u4 = mockData.substr(12, 3);
-		temp = stod(tempu3u4);
-		if (temp == 0) {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
-		u3 = temp;
-		u4 = temp;
+		//tempu3u4 = mockData.substr(12, 3);
+		//temp = stod(tempu3u4);
+		//if (temp == 0) {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
+		//u3 = temp;
+		//u4 = temp;
 
-		tempv2v4 = mockData.substr(16, 3);
-		temp = stod(tempv2v4);
-		if (temp == 0) {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
-		v2 = temp;
-		v4 = temp;
+		//tempv2v4 = mockData.substr(16, 3);
+		//temp = stod(tempv2v4);
+		//if (temp == 0) {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
+		//v2 = temp;
+		//v4 = temp;
 
 		// get current position
 		unsigned char addrMotor1 = 6; //module address
@@ -416,18 +416,18 @@ int main()
 		Eigen::Matrix<double, 6, 6>jacobiRobot = coorTransform * jacobiRobotBase;
 
 		// Calculate Jacobian Image matrix
-		Eigen::Matrix<double, 8, 6> jacobiImage{
-			{-947.0 / Z,0, (u1 - 160.0) / Z, 0.556 * (v1 - 100.0) * (0.0019 * u1 - 0.304), -0.00106 * pow((u1 - 160.0),2) - 947.0,     v1 - 100.0},
-			{0, -947.0 / Z, (v1 - 100.0) / Z, 0.00106 * pow((v1 - 100.0),2) + 947.0, -0.556 * (v1 - 100.0) * (0.0019 * u1 - 0.304), 160.0 - 1.0 * u1},
-			{-947.0 / Z,        0, (u2 - 160.0) / Z, 0.556 * (v2 - 100.0) * (0.0019 * u2 - 0.304), -0.00106 * pow((u2 - 160.0),2) - 947.0,     v2 - 100.0},
-			{0, -947.0 / Z, (v2 - 100.0) / Z, 0.00106 * pow((v2 - 100.0),2) + 947.0, -0.556 * (v2 - 100.0) * (0.0019 * u2 - 0.304), 160.0 - 1.0 * u2},
-			{-947.0 / Z,        0, (u3 - 160.0) / Z, 0.556 * (v3 - 100.0) * (0.0019 * u3 - 0.304),        -0.00106 * pow((u3 - 160.0),2) - 947.0,     v3 - 100.0},
-			{ 0, -947.0 / Z, (v3 - 100.0) / Z,         0.00106 * pow((v3 - 100.0),2) + 947.0, -0.556 * (v3 - 100.0) * (0.0019 * u3 - 0.304), 160.0 - 1.0 * u3},
-			{-947.0 / Z,        0, (u4 - 160.0) / Z, 0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304),        -0.00106 * pow((u4 - 160.0),2) - 947.0,     v4 - 100.0},
-			{0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
-		};
-	/*	cout << "Calculated image speed" << endl;
-		cout << jacobiImage << endl;*/
+	//	Eigen::Matrix<double, 8, 6> jacobiImage{
+	//		{-947.0 / Z,0, (u1 - 160.0) / Z, 0.556 * (v1 - 100.0) * (0.0019 * u1 - 0.304), -0.00106 * pow((u1 - 160.0),2) - 947.0,     v1 - 100.0},
+	//		{0, -947.0 / Z, (v1 - 100.0) / Z, 0.00106 * pow((v1 - 100.0),2) + 947.0, -0.556 * (v1 - 100.0) * (0.0019 * u1 - 0.304), 160.0 - 1.0 * u1},
+	//		{-947.0 / Z,        0, (u2 - 160.0) / Z, 0.556 * (v2 - 100.0) * (0.0019 * u2 - 0.304), -0.00106 * pow((u2 - 160.0),2) - 947.0,     v2 - 100.0},
+	//		{0, -947.0 / Z, (v2 - 100.0) / Z, 0.00106 * pow((v2 - 100.0),2) + 947.0, -0.556 * (v2 - 100.0) * (0.0019 * u2 - 0.304), 160.0 - 1.0 * u2},
+	//		{-947.0 / Z,        0, (u3 - 160.0) / Z, 0.556 * (v3 - 100.0) * (0.0019 * u3 - 0.304),        -0.00106 * pow((u3 - 160.0),2) - 947.0,     v3 - 100.0},
+	//		{ 0, -947.0 / Z, (v3 - 100.0) / Z,         0.00106 * pow((v3 - 100.0),2) + 947.0, -0.556 * (v3 - 100.0) * (0.0019 * u3 - 0.304), 160.0 - 1.0 * u3},
+	//		{-947.0 / Z,        0, (u4 - 160.0) / Z, 0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304),        -0.00106 * pow((u4 - 160.0),2) - 947.0,     v4 - 100.0},
+	//		{0, -947.0 / Z, (v4 - 100.0) / Z,         0.00106 * pow((v4 - 100.0), 2) + 947.0, -0.556 * (v4 - 100.0) * (0.0019 * u4 - 0.304), 160.0 - 1.0 * u4},
+	//	};
+	///*	cout << "Calculated image speed" << endl;
+	//	cout << jacobiImage << endl;*/
 
 
 		if (jacobiRobot.determinant() == 0) {
@@ -441,55 +441,55 @@ int main()
 			continue;
 		}
 
-		// Calculate Jacobian image pseudoinverse
-		Eigen::Matrix<double, 6, 8>jacobiImagePInv = (jacobiImage.transpose() * jacobiImage).inverse() * jacobiImage.transpose();
+		//// Calculate Jacobian image pseudoinverse
+		//Eigen::Matrix<double, 6, 8>jacobiImagePInv = (jacobiImage.transpose() * jacobiImage).inverse() * jacobiImage.transpose();
 
-		// Calculate error vec
-		Eigen::Matrix<double, 8, 1> errorVect{
-			{u1_ref - u1},
-			{v1_ref - v1},
-			{u2_ref - u2},
-			{v2_ref - v2},
-			{u3_ref - u3},
-			{v3_ref - v3},
-			{u4_ref - u4},
-			{v4_ref - v4},
-		};
-
-		double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2));
-
-
-		if (normErr <= 35) {
-			// Add zero set here
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-
-			cout << "Tracking done" << endl;
-			continue;
-		}
-
-		// Calculate joint speed
-		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.02,0,0,0,0,0},
-			{0,0.02,0,0,0,0},
-			{0,0,0.02,0,0,0},
-			{0,0,0,0.02,0,0},
-			{0,0,0,0,0.02,0},
-			{0,0,0,0,0,0.02},
-		};
-		Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
-		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
-		//Eigen::Matrix<double, 6, 1 >desiredSpeed{
-		//	{1},
-		//	{0},
-		//	{0},
-		//	{0},
-		//	{0},
-		//	{0},
+		//// Calculate error vec
+		//Eigen::Matrix<double, 8, 1> errorVect{
+		//	{u1_ref - u1},
+		//	{v1_ref - v1},
+		//	{u2_ref - u2},
+		//	{v2_ref - v2},
+		//	{u3_ref - u3},
+		//	{v3_ref - v3},
+		//	{u4_ref - u4},
+		//	{v4_ref - v4},
 		//};
-		//Eigen::Matrix<double, 6, 1>jointSpeed = jacobiRobot.inverse() * desiredSpeed;
+
+		//double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2));
+
+
+		//if (normErr <= 35) {
+		//	// Add zero set here
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+
+		//	cout << "Tracking done" << endl;
+		//	continue;
+		//}
+
+		//// Calculate joint speed
+		//Eigen::Matrix<double, 6, 6>proportionalGain{
+		//	{0.02,0,0,0,0,0},
+		//	{0,0.02,0,0,0,0},
+		//	{0,0,0.02,0,0,0},
+		//	{0,0,0,0.02,0,0},
+		//	{0,0,0,0,0.02,0},
+		//	{0,0,0,0,0,0.02},
+		//};
+		//Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
+		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
+		Eigen::Matrix<double, 6, 1 >desiredSpeed{
+			{5},
+			{0},
+			{0},
+			{0},
+			{0},
+			{0},
+		};
+		Eigen::Matrix<double, 6, 1>jointSpeed = jacobiRobot.inverse() * desiredSpeed;
 		cout << "Calculated joint speed" << endl;
 		cout << jointSpeed << endl;
 
@@ -619,7 +619,7 @@ int main()
 		AllDataCSV << ",";
 		AllDataCSV << vel6;
 		AllDataCSV << ",";
-		AllDataCSV << errorVect(0, 0);
+		/*AllDataCSV << errorVect(0, 0);
 		AllDataCSV << ",";
 		AllDataCSV << errorVect(1, 0);
 		AllDataCSV << ",";
@@ -660,7 +660,7 @@ int main()
 		AllDataCSV << speed6;
 		AllDataCSV << ",";
 		AllDataCSV << normErr;
-		AllDataCSV << ",";
+		AllDataCSV << ",";*/
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<milliseconds>(stop - start);
 		std::cout << "duration: " << duration.count() << std::endl;
