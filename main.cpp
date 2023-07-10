@@ -406,7 +406,7 @@ int main()
 		Eigen::Matrix<double, 6, 6> coorTransform{
 			{0, -1, 0, 0, 0, 0},
 			{0, 0, 1, 0, 0, 0},
-			{-1, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, -1, 0},
 			{0, 0, 0, 0, 0, 1},
 			{0, 0, 0,1, 0, 0},
@@ -539,11 +539,11 @@ int main()
 			speed1 = -60000;
 		}
 
-		if (speed2 > 60000) {
-			speed2 = 60000;
+		if (speed2 > 90000) {
+			speed2 = 90000;
 		}
-		else if (speed2 < -60000) {
-			speed2 = -60000;
+		else if (speed2 < -90000) {
+			speed2 = -90000;
 		}
 
 		if (speed3 > 150000) {
