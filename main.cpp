@@ -405,11 +405,11 @@ int main()
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
 			{0, -1, 0, 0, 0, 0},
-			{0, 0, -1, 0, 0, 0},
-			{1, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0},
+			{-1, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, -1, 0},
-			{0, 0, 0, 0, 0, -1},
-			{0, 0, 0, 1, 0, 0},
+			{0, 0, 0, 0, 0, 1},
+			{0, 0, 0, -1, 0, 0},
 		};
 
 		// Final Jacobian robot matrix
@@ -482,8 +482,8 @@ int main()
 		//Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
 		Eigen::Matrix<double, 6, 1 >desiredSpeed{
+			{1},
 			{0},
-			{5},
 			{0},
 			{0},
 			{0},
