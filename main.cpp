@@ -260,13 +260,13 @@ int main()
 		        mockData = messagestring;
 		    }
 		}
-		else {
-			for (int i = 1; i <= 6; i++) //try 6 motor
-			{
-				ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
-			}
-			continue;
-		}
+		//else {
+		//	for (int i = 1; i <= 6; i++) //try 6 motor
+		//	{
+		//		ServoStopMotor(i, AMP_ENABLE | STOP_SMOOTH);   // enable amp
+		//	}
+		//	continue;
+		//}
 
 		//string mockData = "297,125,105,167,147";
 		//cout << mockData << endl;
@@ -404,12 +404,12 @@ int main()
 
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
-			{0, -1, 0, 0, 0, 0},
-			{0, 0, -1, 0, 0, 0},
+			{0, 1, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0},
 			{1, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, -1, 0},
-			{0, 0, 0, 0, 0, -1},
-			{0, 0, 0, -1, 0, 0},
+			{0, 0, 0, 0, 1, 0},
+			{0, 0, 0, 0, 0, 1},
+			{0, 0, 0, 1, 0, 0},
 		};
 
 		// Final Jacobian robot matrix
