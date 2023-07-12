@@ -1,0 +1,6 @@
+YOLOv5nano: U_mse = 1.835, V_mse = 0.568
+YOLOv5small: U_mse = 2.49, V_mse = 0.602
+YOLOv5medium: U_mse = 3.752, V mse = 0.524
+YOLOv7tiny: U_mse = 2.944, V_mse = 1,478
+YOLOV7Large: U_mse = 3.35, V_mse = 1.192
+YOLOv7XL: U_mse = 3.256, V_mse = 3.259
