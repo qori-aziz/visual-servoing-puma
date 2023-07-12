@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['BallPurple']
+
+roboflow:
+  workspace: itb-anfcb
+  project: purple-ball
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/itb-anfcb/purple-ball/dataset/1
