@@ -1,5 +1,4 @@
-﻿  Building Custom Rule C:/Users/muham/OneDrive/Tesis/Program/visual-servoing-puma/CMakeLists.txt
-  main.cpp
+﻿  main.cpp
 C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\main.cpp(146,22): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
   picfunc.cpp
   Generating Code...
