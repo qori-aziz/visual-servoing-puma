@@ -406,10 +406,10 @@ int main()
 		Eigen::Matrix<double, 6, 6> coorTransform{
 			{0, -1, 0, 0, 0, 0},
 			{0, 0, 1, 0, 0, 0},
-			{-1, 0, 0, 0, 0, 0},
+			{1, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, -1, 0},
 			{0, 0, 0, 0, 0, 1},
-			{0, 0, 0, -1, 0, 0},
+			{0, 0, 0, 1, 0, 0},
 		};
 
 		// Final Jacobian robot matrix
@@ -514,7 +514,7 @@ int main()
 		speed2 = speed2 * 1;
 		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * 1;
+		speed5 = speed5 * -1;
 		speed6 = speed6 * -1;
 		//Eigen::Matrix<int, 6, 1>realsSpeed{
 		//	{speed1},
