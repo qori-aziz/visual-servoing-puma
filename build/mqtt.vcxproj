@@ -86,16 +86,16 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
-    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0\eigen-3.4.0;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\muham\OneDrive\Tesis\Program\visual-servoing-puma\eigen-3.4.0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
