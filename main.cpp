@@ -28,93 +28,33 @@ const double u3_ref = 245;
 const double v3_ref = 20;
 const double u4_ref = 245;
 const double v4_ref = 197;
-const double q1_ref = 0;
-const double q2_ref = M_PI / 2;
-const double q3_ref = -M_PI / 2;
-const double q4_ref = 0;
-const double q5_ref = M_PI / 2;
-const double q6_ref = 0;
-const double decoder1 = 50000;
-const double decoder2 = 60000;
-const double decoder3 = 180000;
+
+// In degrees
+const double q1_ref_deg = 0;
+const double q2_ref_deg = 35;
+const double q3_ref_deg = 52;
+const double q4_ref_deg = 0;
+const double q5_ref_deg = 70;
+const double q6_ref_deg = 0;
+const double decoder1 = 46000;
+const double decoder2 = 70000;
+const double decoder3 = 170000;
 const double decoder4 = 30000;
-const double decoder5 = 42000;
+const double decoder5 = 30000;
 const double decoder6 = 25000;
 const double servoticktime = 0.000512;
 
-void signal_callback_handler(int signum) {
-	cout << "Caught signal " << signum << endl;
-	// Terminate program
-	exit(0);
-}
-
-/*
-void atexit_handler_1(HINSTANCE hModule, Func_ServoLoadTraj ServoLoadTraj, Func_NmcShutdown NmcShutdown, ofstream AllDataCSV)
-{
-
-	AllDataCSV.close();
-	ServoLoadTraj(1, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,    // vel = 100,000
-		1000, // acc = 100
-		0     // pwm = 0
-	);
-	ServoLoadTraj(2, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,     // vel = -100,000
-		1000,  // acc = 100
-		0      // pwm = 0
-	);
-
-	ServoLoadTraj(3, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,     // vel = -100,000
-		1000,  // acc = 100
-		0      // pwm = 0
-	);
-	ServoLoadTraj(4, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,    // vel = 100,000
-		1000, // acc = 100
-		0     // pwm = 0
-	);
-	ServoLoadTraj(5, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,     // vel = -100,000
-		1000,  // acc = 100
-		0      // pwm = 0
-	);
-
-	ServoLoadTraj(6, // vertical
-		LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
-		5000, // pos = 2000
-		0,     // vel = -100,000
-		1000,  // acc = 100
-		0      // pwm = 0
-	);
-
-	NmcShutdown();
-	FreeLibrary(hModule);
-
-	std::cout << "at exit #1\n";
-}
-*/
 
 // With the library header files included, continue by defining a main function.
 int main()
 {
 	// Initialize start angle position
-	double q1 = q1_ref;
-	double q2 = q2_ref;
-	double q3 = q3_ref;
-	double q4 = q4_ref;
-	double q5 = q5_ref;
-	double q6 = q6_ref;
+	double q1_ref = q1_ref_deg * M_PI / 180;
+	double q2_ref = q2_ref_deg * M_PI / 180;
+	double q3_ref = q3_ref_deg * M_PI / 180;
+	double q4_ref = q4_ref_deg * M_PI / 180;
+	double q5_ref = q5_ref_deg * M_PI / 180;
+	double q6_ref = q6_ref_deg * M_PI / 180;
 	double u1 = 0;
 	double v1 = 0;
 	double u2 = 0;
@@ -343,33 +283,26 @@ int main()
 		short int vel1, vel2, vel3, vel4, vel5, vel6 = 0; //motor vel. In encoder counts/servo tick
 		unsigned char stat_items = 0; //specify which data should be returned
 
-		stat_items = SEND_POS | SEND_VEL; //specify both position and velocity
+		stat_items = SEND_POS; //specify both position and velocity
 		 // should be read from contorller
 		// be careful when addressing. Motor 1 is farthest
 		NmcReadStatus(addrMotor1, stat_items); //Read data from controllers
 		pos1 = ServoGetPos(addrMotor1); //retrieve the position and velocity data
-		vel1 = ServoGetVel(addrMotor1); //from the local internal data structure
 
 		NmcReadStatus(addrMotor2, stat_items); //Read data from controllers
 		pos2 = ServoGetPos(addrMotor2); //retrieve the position and velocity data
-		vel2 = ServoGetVel(addrMotor2); //from the local internal data structure
-
+	
 		NmcReadStatus(addrMotor3, stat_items); //Read data from controllers
 		pos3 = ServoGetPos(addrMotor3); //retrieve the position and velocity data
-		vel3 = ServoGetVel(addrMotor3); //from the local internal data structure
 
 		NmcReadStatus(addrMotor4, stat_items); //Read data from controllers
 		pos4 = ServoGetPos(addrMotor4); //retrieve the position and velocity data
-		vel4 = ServoGetVel(addrMotor4); //from the local internal data structure
-
 
 		NmcReadStatus(addrMotor5, stat_items); //Read data from controllers
 		pos5 = ServoGetPos(addrMotor5); //retrieve the position and velocity data
-		vel5 = ServoGetVel(addrMotor5); //from the local internal data structure
 
 		NmcReadStatus(addrMotor6, stat_items); //Read data from controllers
 		pos6 = ServoGetPos(addrMotor6); //retrieve the position and velocity data
-		vel6 = ServoGetVel(addrMotor6); //from the local internal data structure
 
 
 		/*1 sesuai
@@ -381,12 +314,12 @@ int main()
 		*/
 
 		// Calulate new q1 to q6
-		q1 = (q1_ref + ((pos1 / decoder1 * 6.2832) * 1));
-		q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
-		q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
-		q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
-		q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * -1));
-		q6 = q6_ref + ((pos6 / decoder6 * 6.2832) * -1);
+		double q1 = (q1_ref + ((pos1 / decoder1 * 6.2832) * 1));
+		double q2 = (q2_ref + ((pos2 / decoder2 * 6.2832) * 1));
+		double q3 = (q3_ref + ((pos3 / decoder3 * 6.2832) * 1));
+		double q4 = (q4_ref + ((pos4 / decoder4 * 6.2832) * -1));
+		double q5 = (q5_ref + ((pos5 / decoder5 * 6.2832) * 1));
+		double q6 = (q6_ref + ((pos6 / decoder6 * 6.2832) * -1));
 
 		//cout << pos1 << ", " << pos2 << ", " << pos3 << ", " <<  pos4 << ", " << pos5 << ", " << pos6 << endl;
 
@@ -507,14 +440,14 @@ int main()
 		2 sesuai
 		3 sesuai
 		4 kebalik
-		5 kebalik
+		5 sesuai
 		6 kebalik
 		*/
 		speed1 = speed1 * 1;
 		speed2 = speed2 * 1;
 		speed3 = speed3 * 1;
 		speed4 = speed4 * -1;
-		speed5 = speed5 * -1;
+		speed5 = speed5 * 1;
 		speed6 = speed6 * -1;
 		//Eigen::Matrix<int, 6, 1>realsSpeed{
 		//	{speed1},
@@ -582,14 +515,14 @@ int main()
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed1,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 		ServoLoadTraj(5, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed2,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 
@@ -597,21 +530,21 @@ int main()
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed3,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 		ServoLoadTraj(3, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed4,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 		ServoLoadTraj(2, // vertical
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed5,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 
@@ -619,7 +552,7 @@ int main()
 			LOAD_POS | VEL_MODE | LOAD_VEL | LOAD_ACC | ENABLE_SERVO | START_NOW,
 			0, // pos = 2000
 			speed6,    // vel = 100,000
-			1000, // acc = 100
+			100, // acc = 100
 			0     // pwm = 0
 		);
 
