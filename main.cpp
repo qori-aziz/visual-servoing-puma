@@ -152,7 +152,7 @@ int main()
 	bool running = true;
 	ofstream AllDataCSV;
 	AllDataCSV.open("alldata.csv");
-	AllDataCSV << "Z,u1,v1,u2,v2,u3,v3,u4,v4,pos1,pos2,pos3,pos4,pos5,pos6,vel1,vel2,vel3,vel4,vel5,vel6,err1,err2,err3,err4,err5,err6,err7,err8,speed1,speed2,speed3,speed4,speed5,speed6,cmdspeed1,cmdspeed2,cmdspeed3,cmdspeed4,cmdspeed5,cmdspeed6,time";
+	AllDataCSV << "Z,u1,v1,u2,v2,u3,v3,u4,v4,pos1,pos2,pos3,pos4,pos5,pos6,vel1,vel2,vel3,vel4,vel5,vel6,err1,err2,err3,err4,err5,err6,err7,err8,speed1,speed2,speed3,speed4,speed5,speed6,cmdspeed1,cmdspeed2,cmdspeed3,cmdspeed4,cmdspeed5,cmdspeed6,time,normErr";
 	AllDataCSV << ",\n";
 
 	//signal(SIGINT, signal_callback_handler);
@@ -379,17 +379,17 @@ int main()
 
 		// Calculate error vec
 		Eigen::Matrix<double, 8, 1> errorVect{
-			{u1_ref - u1},
-			{v1_ref - v1},
-			{u2_ref - u2},
-			{v2_ref - v2},
-			{u3_ref - u3},
-			{v3_ref - v3},
-			{u4_ref - u4},
-			{v4_ref - v4},
+			{u1 - u1_ref},
+			{v1 - v1_ref},
+			{u2 - u2_ref},
+			{v2 - v2_ref},
+			{u3 - u3_ref},
+			{v3 - v3_ref},
+			{u4 - u4_ref},
+			{v4 - v4_ref},
 		};
 
-		double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2));
+		double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2)+ pow(errorVect(6, 0), 2)+ pow(errorVect(5, 0), 2));
 
 
 		if (normErr <= 35) {
@@ -405,14 +405,14 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.02,0,0,0,0,0},
-			{0,0.02,0,0,0,0},
-			{0,0,0.02,0,0,0},
-			{0,0,0,0.02,0,0},
-			{0,0,0,0,0.02,0},
-			{0,0,0,0,0,0.02},
+			{0.06,0,0,0,0,0},
+			{0,0.06,0,0,0,0},
+			{0,0,0.06,0,0,0},
+			{0,0,0,0.06,0,0},
+			{0,0,0,0,0.06,0},
+			{0,0,0,0,0,0.06},
 		};
-		Eigen::Matrix<double, 6, 1>jointSpeed = proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
+		Eigen::Matrix<double, 6, 1>jointSpeed = -proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1 >desiredSpeed{
 		//	{1},
@@ -644,6 +644,7 @@ int main()
 		auto duration = duration_cast<milliseconds>(stop - start);
 		std::cout << "duration: " << duration.count() << std::endl;
 		AllDataCSV << duration.count();
+		AllDataCSV << ",";
 		AllDataCSV << normErr;
 		AllDataCSV << ",";
 		AllDataCSV << ",\n";
