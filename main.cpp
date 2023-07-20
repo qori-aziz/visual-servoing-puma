@@ -405,12 +405,12 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.06,0,0,0,0,0},
-			{0,0.06,0,0,0,0},
-			{0,0,0.06,0,0,0},
-			{0,0,0,0.06,0,0},
-			{0,0,0,0,0.06,0},
-			{0,0,0,0,0,0.06},
+			{0.03,0,0,0,0,0},
+			{0,0.03,0,0,0,0},
+			{0,0,0.03,0,0,0},
+			{0,0,0,0.03,0,0},
+			{0,0,0,0,0.03,0},
+			{0,0,0,0,0,0.03},
 		};
 		Eigen::Matrix<double, 6, 1>jointSpeed = -proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
