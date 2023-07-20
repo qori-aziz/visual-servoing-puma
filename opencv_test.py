@@ -69,7 +69,7 @@ modelQuadratic = LinearRegression().fit(x_, y)
 # timers_container = Timers()
 # timers_container.create_timer('every poll', publish)
 # Chronograph(timers_container.timer_jobs, 'US/Pacific')
-schedule.every(0.18).seconds.do(publish)
+schedule.every(0.15).seconds.do(publish)
 # t = Timer(0.150, publish(client, data))
 # t.start() # after 30 seconds, "hello, world" will be printed`
 try:
