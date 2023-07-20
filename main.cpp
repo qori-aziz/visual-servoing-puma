@@ -113,17 +113,33 @@ int main()
 		ServoStopMotor(i, AMP_ENABLE | STOP_ABRUPT); // stop at current pos.
 		ServoResetPos(i);                            // reset the posiiton counter to 0
 
-		ServoSetGain(i,    // axis = 1
-			100,  // Kp = 100
-			1000, // Kd = 1000
-			0,    // Ki = 0
-			0,    // IL = 0
-			255,  // OL = 255
-			0,    // CL = 0
-			4000, // EL = 4000
-			1,    // SR = 1
-			0     // DC = 0
-		);
+		if (i == 4 || i == 5 || i == 6) { // Big motor, 4-6
+			ServoSetGain(i,    // axis = 1
+				150,  // Kp = 100
+				1200, // Kd = 1000
+				3,    // Ki = 0
+				0,    // IL = 0
+				255,  // OL = 255
+				0,    // CL = 0
+				4000, // EL = 4000
+				1,    // SR = 1
+				0     // DC = 0
+			);
+		}
+		else {
+			ServoSetGain(i,    // axis = 1
+				80,  // Kp = 100
+				1000, // Kd = 1000
+				1,    // Ki = 0
+				0,    // IL = 0
+				255,  // OL = 255
+				0,    // CL = 0
+				4000, // EL = 4000
+				1,    // SR = 1
+				0     // DC = 0
+			);
+		}
+		
 	}
 
 	std::printf("tes1");
@@ -338,10 +354,10 @@ int main()
 		// Coordinate transformation between base and end-effector
 		Eigen::Matrix<double, 6, 6> coorTransform{
 			{0, -1, 0, 0, 0, 0},
-			{0, 0, -1, 0, 0, 0},
+			{0, 0, 1,  0,  0, 0},
 			{-1, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, -1, 0},
-			{0, 0, 0, 0, 0, -1},
+			{0, 0, 0,  0, -1, 0},
+			{0, 0, 0,  0,  0, 1},
 			{0, 0, 0, -1, 0, 0},
 		};
 
@@ -405,12 +421,12 @@ int main()
 
 		// Calculate joint speed
 		Eigen::Matrix<double, 6, 6>proportionalGain{
-			{0.03,0,0,0,0,0},
-			{0,0.03,0,0,0,0},
-			{0,0,0.03,0,0,0},
-			{0,0,0,0.03,0,0},
-			{0,0,0,0,0.03,0},
-			{0,0,0,0,0,0.03},
+			{0.025,0,0,0,0,0},
+			{0,0.025,0,0,0,0},
+			{0,0,0.025,0,0,0},
+			{0,0,0,0.025,0,0},
+			{0,0,0,0,0.025,0},
+			{0,0,0,0,0,0.025},
 		};
 		Eigen::Matrix<double, 6, 1>jointSpeed = -proportionalGain * jacobiRobot.inverse() * jacobiImagePInv * errorVect;
 		//Eigen::Matrix<double, 6, 1>endEffectorSpeed = proportionalGain * jacobiImagePInv * errorVect;
