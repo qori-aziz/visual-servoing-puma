@@ -443,7 +443,7 @@ int main()
 		double normErr = sqrt(pow(errorVect(0, 0), 2) + pow(errorVect(1, 0), 2) + pow(errorVect(2, 0), 2) + pow(errorVect(3, 0), 2) + pow(errorVect(4, 0), 2) + pow(errorVect(5, 0), 2)+ pow(errorVect(6, 0), 2)+ pow(errorVect(5, 0), 2));
 
 
-		if (normErr <= 25) {
+		if (normErr <= 40) {
 			// Add zero set here
 			for (int i = 1; i <= 6; i++) //try 6 motor
 			{
