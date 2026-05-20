@@ -6,6 +6,32 @@ import yolov7_new.detect as d
 import time
 import csv
 import paho.mqtt.client as mqtt
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+# from threading import Timer
+# from schedule_machine import Timers, Chronograph
+import schedule
+import time
+
+depth = 0
+u_lefttop = 0
+v_lefttop = 0
+u_rightdown = 0
+v_rightdown = 0
+data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
+
+## Set MQTT
+Id = "producerPy"
+Ip = "localhost"
+client = mqtt.Client(Id)
+# client.max_queued_messages_set(1)
+# client.max_inflight_messages_set(1)
+client.connect(Ip, 1883, 60)
+
+def publish():
+    client.publish("data", data,qos=0)
+
 
 # Set pixycam
 res = p.initializing()
@@ -15,16 +41,40 @@ if res != 0:
 ## Set YOLO
 model = d.initialization()
 
-## Set MQTT
-Id = "producerPy"
-Ip = "localhost"
-client = mqtt.Client(Id)
-client.connect(Ip, 1883, 60)
 f = open('errdata.csv', 'w')
-writer = csv.writer(f)
+# writer = csv.writer(f)
 
+# Desired feature : 25.26,83.0,25.0,257.0,193.0 (D, u1,v1,u4,v4)
+
+## Set depth estimation
+x = np.array([
+    [206.2868217],
+    [112.2826087],
+    [104.0526316],
+    [84.86111111],
+    [83.32624113],
+    [56.99367089],
+    [66.32704403],
+    [55.83707865],
+    [47.47619048],
+])
+
+y = np.array([50, 80, 100, 130, 150, 180, 200, 250, 300])
+
+modelLinear = LinearRegression()
+modelLinear.fit(x,y)
+
+x_ = PolynomialFeatures(degree=2, include_bias=False).fit_transform(x)
+modelQuadratic = LinearRegression().fit(x_, y)
+# timers_container = Timers()
+# timers_container.create_timer('every poll', publish)
+# Chronograph(timers_container.timer_jobs, 'US/Pacific')
+schedule.every(0.15).seconds.do(publish)
+# t = Timer(0.150, publish(client, data))
+# t.start() # after 30 seconds, "hello, world" will be printed`
 try:
     while True:
+        schedule.run_pending()
         t0 = time.time()
         p.getFrame()
 
@@ -37,24 +87,36 @@ try:
         # im = Image.open("out0.ppm")
         # im.save("yolov5_new/out.jpg")
 
-        curr_vertical, curr_horizontal, err_vertical, err_horizontal, inference_time, nms_time = d.detect(model)
-        client.publish("errver", err_vertical)
-        client.publish("errhor", err_horizontal)
-
-        t1 = time.time()
-
+        na, inference_time, nms_time = d.detect(model)
         # image = cv2.imread("yolov7/out.jpg")
         # cv2.imshow("Image", image)
         # cv2.waitKey(1)
-        
-        
+        depth = 0
+        u_lefttop = 0
+        v_lefttop = 0
+        u_rightdown = 0
+        v_rightdown = 0
+        if len(na)>0:
+            u_lefttop = int(na[0][0])
+            v_lefttop = int(na[0][1])
+            u_rightdown = int(na[0][2])
+            v_rightdown = int(na[0][3])
+            width = abs(na[0][0] - na[0][2])
+            # length = abs(na[0][1] - na[0][3])
+            dataDepth = np.array([width])
+            print(dataDepth)
+            y_pred_linear = modelLinear.predict(np.array(dataDepth).reshape(1, -1))
+            x_ = PolynomialFeatures(degree=2, include_bias=False).fit_transform(dataDepth.reshape(1, -1))
+            y_pred_quadratic = modelQuadratic.predict(x_.reshape(1, -1))
+            print(f"predicted linear response:{y_pred_linear} \n")
+            print(f"predicted quadratic response:{y_pred_quadratic} \n")
+            depth = int(y_pred_quadratic[0])
+            # data = (width,length)
+            # writer.writerow(data)
+            # client.publish("data", data, qos=0)
+        data = f'{depth:03d},{u_lefttop:03d},{v_lefttop:03d},{u_rightdown:03d},{v_rightdown:03d}'
+        t1 = time.time()
         one_frame_time = 1E3 * (t1 - t0)
-        # data = (inference_time, nms_time, one_frame_time)
-        
-        if (curr_vertical != 0) and (curr_horizontal!=0):
-            data = (curr_horizontal, curr_vertical)
-            writer.writerow(data)
-        
         print(f'Total 1 frame time: ({one_frame_time:.1f}ms)')
 except KeyboardInterrupt:
     f.close()

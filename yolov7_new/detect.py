@@ -209,7 +209,7 @@ def detect(model, save_img=False):
     #     #print(f"Results saved to {save_dir}{s}")
 
     # print(f'Done. ({(1E3 * (time.time() - t0)):.1f}ms), gajelas')
-    return curr_vertical, curr_horizontal, err_vertical, err_horizon, inference_time, nms_time
+    return na, inference_time, nms_time
 
 
 if __name__ == '__main__':

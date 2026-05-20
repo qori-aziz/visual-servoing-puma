@@ -93,6 +93,24 @@ extern "C" Func_NmcShutdown LoadNmcShutdown(HINSTANCE hModule){
     return NmcShutdown;
 }
 
+extern "C" Func_NmcReadStatus LoadNmcReadStatus(HINSTANCE hModule) {
+    Func_NmcReadStatus NmcReadStatus;
+
+    if (hModule == NULL) {
+        printf("Error Boss\n");
+        printf("%d", GetLastError());
+        return 0;
+    }
+
+    NmcReadStatus = (Func_NmcReadStatus)GetProcAddress(hModule, "NmcReadStatus");
+    if (NmcReadStatus == NULL) {
+        printf("function null");
+        return 0;
+    }
+
+    return NmcReadStatus;
+}
+
 
 
 // Servo Functions
@@ -167,4 +185,40 @@ extern "C" Func_ServoSetGain LoadServoSetGain(HINSTANCE hModule){
     }
 
     return ServoSetGain;
+}
+
+extern "C" Func_ServoGetPos LoadServoGetPos(HINSTANCE hModule) {
+    Func_ServoGetPos ServoGetPos;
+
+    if (hModule == NULL) {
+        printf("Error Boss\n");
+        printf("%d", GetLastError());
+        return 0;
+    }
+
+    ServoGetPos = (Func_ServoGetPos)GetProcAddress(hModule, "ServoGetPos");
+    if (ServoGetPos == NULL) {
+        printf("function null");
+        return 0;
+    }
+
+    return ServoGetPos;
+}
+
+extern "C" Func_ServoGetVel LoadServoGetVel(HINSTANCE hModule) {
+    Func_ServoGetVel ServoGetVel;
+
+    if (hModule == NULL) {
+        printf("Error Boss\n");
+        printf("%d", GetLastError());
+        return 0;
+    }
+
+    ServoGetVel = (Func_ServoGetVel)GetProcAddress(hModule, "ServoGetVel");
+    if (ServoGetVel == NULL) {
+        printf("function null");
+        return 0;
+    }
+
+    return ServoGetVel;
 }
